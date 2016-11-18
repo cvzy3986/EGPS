@@ -237,46 +237,6 @@ class TabChangeListener implements ChangeListener {
     }
 }
 
-//class SearchButtonActionUser implements ActionListener{
-//	Connection conn;
-//	JTextField searchField;
-//	SearchButtonActionUser(Connection conn,JTextField searchField){
-//		this.conn = conn;
-//		this.searchField=searchField;
-//	}
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		// TODO Auto-generated method stub
-//		String product  = searchField.getText();
-//		try{
-////			while(EGPSAdmin.modelout.getRowCount() != 0)
-////		    	EGPSAdmin.modelout.removeRow(0);
-////			PreparedStatement query = conn.prepareStatement("Select * from product where pname like ?");
-////			query.setString(1, "%"+product+"%");
-////			System.out.println(query);
-////			ResultSet rset = query.executeQuery();
-////			ArrayList<String> row = new ArrayList<>();
-////			while(rset.next()){
-////				row.add(Integer.toString(rset.getInt(1)));
-////				row.add(rset.getString(2));
-////				row.add(Integer.toString(rset.getInt(3)));
-////				row.add(Integer.toString(rset.getInt(4)));
-////				row.add(rset.getString(5));
-////				row.add(Integer.toString(rset.getInt(6)));
-////				row.add(rset.getString(7));
-////				row.add(rset.getString(9));
-////				EGPSAdmin.modelout.addRow(row.toArray());
-////				row.clear();
-//			}
-//		}
-//		catch(SQLException sqle){
-//			System.out.println("SQLException : "+sqle);
-//		}
-//		
-//	}
-//	
-//}
-
 class ProductDrawImage extends JPanel{
 	public void paint(Graphics g){
         g.drawImage(EGPS.PRODUCT.pimage,0,0,this);
@@ -297,31 +257,10 @@ class ProductDrawImage extends JPanel{
 					ioe.printStackTrace();
 				}
 	        }
-//	        @Override
-//	        public void mouseReleased(MouseEvent e) {
-//	        	 System.out.println("마우스 빠질때");
-//	        }
 	    });
 	}
-	
+}
 
-	
-}
-class DBConnect{
-	static void DBConnectFunc(Connection conn){
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://165.229.89.148/mart?autoReconnect=true","team8", "password");
-		} catch (SQLException sqex) {
-			System.out.println("SQLException: " + sqex.getMessage());
-		}
-	}
-}
 class Category_Screen{
 	Panels panels;
 	Category_Screen(Connection conn){
@@ -368,3 +307,59 @@ class GetlogoImage {
 		}
 	}
 }
+
+
+//class SearchButtonActionUser implements ActionListener{
+//	Connection conn;
+//	JTextField searchField;
+//	SearchButtonActionUser(Connection conn,JTextField searchField){
+//		this.conn = conn;
+//		this.searchField=searchField;
+//	}
+//	@Override
+//	public void actionPerformed(ActionEvent e) {
+//		// TODO Auto-generated method stub
+//		String product  = searchField.getText();
+//		try{
+////			while(EGPSAdmin.modelout.getRowCount() != 0)
+////		    	EGPSAdmin.modelout.removeRow(0);
+////			PreparedStatement query = conn.prepareStatement("Select * from product where pname like ?");
+////			query.setString(1, "%"+product+"%");
+////			System.out.println(query);
+////			ResultSet rset = query.executeQuery();
+////			ArrayList<String> row = new ArrayList<>();
+////			while(rset.next()){
+////				row.add(Integer.toString(rset.getInt(1)));
+////				row.add(rset.getString(2));
+////				row.add(Integer.toString(rset.getInt(3)));
+////				row.add(Integer.toString(rset.getInt(4)));
+////				row.add(rset.getString(5));
+////				row.add(Integer.toString(rset.getInt(6)));
+////				row.add(rset.getString(7));
+////				row.add(rset.getString(9));
+////				EGPSAdmin.modelout.addRow(row.toArray());
+////				row.clear();
+//			}
+//		}
+//		catch(SQLException sqle){
+//			System.out.println("SQLException : "+sqle);
+//		}
+//		
+//	}
+//	
+//}
+//class DBConnect{
+//static void DBConnectFunc(Connection conn){
+//	try {
+//		Class.forName("com.mysql.jdbc.Driver");
+//	} catch (ClassNotFoundException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+//	try {
+//		conn = DriverManager.getConnection("jdbc:mysql://165.229.89.148/mart?autoReconnect=true","team8", "password");
+//	} catch (SQLException sqex) {
+//		System.out.println("SQLException: " + sqex.getMessage());
+//	}
+//}
+//}
