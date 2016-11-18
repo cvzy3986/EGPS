@@ -252,7 +252,7 @@ class ReturnMapImage{
 //	}
 //	
 //}
-
+///////////수정테스트
 class ProductDrawImage extends JPanel{
 	public void paint(Graphics g){
         g.drawImage(EGPS.PRODUCT.pimage,0,0,this);
