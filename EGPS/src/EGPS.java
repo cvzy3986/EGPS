@@ -54,6 +54,7 @@ public class EGPS extends JFrame {
 	public static JTextPane textPname = new JTextPane();
 	public static JTextPane textCost = new JTextPane();
 	public static ProductDrawImage panel = new ProductDrawImage();
+	
 	Connection conn;
 	/**
 	 * Launch the application.
@@ -92,19 +93,15 @@ public class EGPS extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1468, 950);
 		getContentPane().setLayout(null);
-		
 		ArrayList<Image> arrFloor = new ArrayList<>();
 		getFloorImage(arrFloor,conn);
-		MapImage mapImage = new MapImage(arrFloor,0);
-		
+
+		MapImage mapImage = new MapImage(arrFloor.get(0),0);
+
 		mapImage.setBounds(438, 376, 1000, 490);
 		getContentPane().add(mapImage);
 		
-		//GetFloorImage floorImage = new GetFloorImage(); //로고 이미지 생성
-
-//		JLabel floorMap = new JLabel(floorImage.F1);
-//		floorMap.setBounds(438, 350, 1000, 500);
-//		getContentPane().add(floorMap);
+	
 
 		JLabel logo = new JLabel(new GetlogoImage().logo);
 		logo.setBounds(17, 30, 441, 130);
@@ -141,7 +138,7 @@ public class EGPS extends JFrame {
 		
 				
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);  //tabbedPane이 바뀔 때마다 지도 바뀜
-		tabbedPane.addChangeListener(new TabChangeListener(mapImage));
+		tabbedPane.addChangeListener(new TabChangeListener(mapImage,arrFloor));
 		tabbedPane.setFont(new Font("굴림", Font.BOLD, 37));
 		tabbedPane.setBounds(17, 175, 334, 537);
 		
@@ -183,10 +180,7 @@ public class EGPS extends JFrame {
 		
 		
 		panel.setBounds(0, 0, 300, 276);
-		infoScreen.add(panel);
-		
-
-		
+		infoScreen.add(panel);	
 		
 	}
 	public static void getFloorImage(ArrayList<Image> arrFloor,Connection conn){
@@ -205,17 +199,15 @@ public class EGPS extends JFrame {
 	}
 }
 class MapImage extends JPanel{
-	private ArrayList<Image> arrFloor;
-	private int index;
-	MapImage(ArrayList<Image> arrFloor,int index){
-		this.arrFloor=arrFloor;
-		this.index=index;
+	private Image floor;
+	MapImage(Image floor , int index){
+		this.floor=floor;
 	}
-	public void setFloor(int floor){
-		index = floor;
+	public void setImage(Image floor){
+		this.floor=floor;
 	}
 	public void paint(Graphics g){
-		g.drawImage(arrFloor.get(index),0,0,this);
+		g.drawImage(floor,0,0,this);
 	}
 }
 class ReturnMapImage{
@@ -227,16 +219,20 @@ class ReturnMapImage{
 }
 class TabChangeListener implements ChangeListener {
 	MapImage mapImage;
-	TabChangeListener(MapImage mapImage){
+	ArrayList<Image> arrFloor;
+	TabChangeListener(MapImage mapImage, ArrayList<Image> arrFloor){
 		this.mapImage=mapImage;
+		this.arrFloor=arrFloor;
 	}
     public void stateChanged(ChangeEvent changeEvent) {
         JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
         int index = sourceTabbedPane.getSelectedIndex();
-        mapImage.setFloor(index);
+  
+        mapImage.setImage(arrFloor.get(index));
         mapImage.repaint();
     }
 }
+
 //class SearchButtonActionUser implements ActionListener{
 //	Connection conn;
 //	JTextField searchField;
@@ -368,5 +364,3 @@ class GetlogoImage {
 		}
 	}
 }
-
-
