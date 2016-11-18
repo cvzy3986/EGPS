@@ -143,7 +143,6 @@ public class EGPS extends JFrame {
 		tabbedPane.setBounds(17, 175, 334, 537);
 		
 		
-		
 		Category_Screen screen = new Category_Screen(conn);
 		for(int i=0;i<screen.panels.panelArray.length;i++){
 			int floor = i+1;
