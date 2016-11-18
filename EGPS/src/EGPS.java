@@ -92,7 +92,7 @@ public class EGPS extends JFrame {
 		getContentPane().setLayout(null);
 		ArrayList<Image> arrFloor = new ArrayList<>();
 		getFloorImage(arrFloor,conn);
-		JPanel mapImage = new MapImage(arrFloor);
+		JPanel mapImage = new MapImage(arrFloor,0);
 		mapImage.setBounds(438, 376, 1000, 490);
 		getContentPane().add(mapImage);
 		
@@ -199,11 +199,13 @@ public class EGPS extends JFrame {
 }
 class MapImage extends JPanel{
 	ArrayList<Image> arrFloor;
-	MapImage(ArrayList<Image> arrFloor){
+	int index;
+	MapImage(ArrayList<Image> arrFloor,int index){
 		this.arrFloor=arrFloor;
+		this.index=index;
 	}
 	public void paint(Graphics g){
-		g.drawImage(arrFloor.get(0),0,0,this);
+		g.drawImage(arrFloor.get(index),0,0,this);
 	}
 }
 class ReturnMapImage{
@@ -252,7 +254,7 @@ class ReturnMapImage{
 //	}
 //	
 //}
-///////////수정테스트
+
 class ProductDrawImage extends JPanel{
 	public void paint(Graphics g){
         g.drawImage(EGPS.PRODUCT.pimage,0,0,this);
