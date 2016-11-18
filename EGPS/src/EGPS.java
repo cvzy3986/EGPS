@@ -182,6 +182,10 @@ public class EGPS extends JFrame {
 		panel.setBounds(0, 0, 300, 276);
 		infoScreen.add(panel);	
 		
+		JPanel pointPanel = new JPanel();
+		pointPanel.setBounds(438, 376, 1000, 490);
+		getContentPane().add(pointPanel);
+		
 	}
 	public static void getFloorImage(ArrayList<Image> arrFloor,Connection conn){
 		try {
