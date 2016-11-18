@@ -41,6 +41,8 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 
 import javax.swing.border.BevelBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.UIManager;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -90,9 +92,11 @@ public class EGPS extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1468, 950);
 		getContentPane().setLayout(null);
+		
 		ArrayList<Image> arrFloor = new ArrayList<>();
 		getFloorImage(arrFloor,conn);
-		JPanel mapImage = new MapImage(arrFloor,0);
+		MapImage mapImage = new MapImage(arrFloor,0);
+		
 		mapImage.setBounds(438, 376, 1000, 490);
 		getContentPane().add(mapImage);
 		
@@ -136,9 +140,12 @@ public class EGPS extends JFrame {
 		
 		
 				
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);  //tabbedPaneÀÌ ¹Ù²ð ¶§¸¶´Ù Áöµµ ¹Ù²ñ
+		tabbedPane.addChangeListener(new TabChangeListener(mapImage));
 		tabbedPane.setFont(new Font("±¼¸²", Font.BOLD, 37));
 		tabbedPane.setBounds(17, 175, 334, 537);
+		
+		
 		
 		Category_Screen screen = new Category_Screen(conn);
 		for(int i=0;i<screen.panels.panelArray.length;i++){
@@ -198,11 +205,14 @@ public class EGPS extends JFrame {
 	}
 }
 class MapImage extends JPanel{
-	ArrayList<Image> arrFloor;
-	int index;
+	private ArrayList<Image> arrFloor;
+	private int index;
 	MapImage(ArrayList<Image> arrFloor,int index){
 		this.arrFloor=arrFloor;
 		this.index=index;
+	}
+	public void setFloor(int floor){
+		index = floor;
 	}
 	public void paint(Graphics g){
 		g.drawImage(arrFloor.get(index),0,0,this);
@@ -214,6 +224,18 @@ class ReturnMapImage{
 		Image temp2 = temp.getScaledInstance(1000, 490, Image.SCALE_SMOOTH);
 		return temp2;
 	}
+}
+class TabChangeListener implements ChangeListener {
+	MapImage mapImage;
+	TabChangeListener(MapImage mapImage){
+		this.mapImage=mapImage;
+	}
+    public void stateChanged(ChangeEvent changeEvent) {
+        JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+        int index = sourceTabbedPane.getSelectedIndex();
+        mapImage.setFloor(index);
+        mapImage.repaint();
+    }
 }
 //class SearchButtonActionUser implements ActionListener{
 //	Connection conn;
