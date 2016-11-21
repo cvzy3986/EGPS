@@ -6,14 +6,16 @@ public class Product {
 	int pid;
 	String pname;
 	int cost;
-	Location location;
+	int x = -1;
+	int y = -1;
 	Image pimage;
 	String URL;
 	void set(int pid,String pname,int cost,Location location,Image imageData,String URL){
 		this.pid=pid;
 		this.pname=pname;
 		this.cost = cost;
-		this.location=location;
+		this.x=x;
+		this.y=y;
 		this.pimage = imageData;
 		this.URL =URL;
 	}
@@ -29,10 +31,12 @@ public class Product {
 		this.cost = cost;
 	}
 
-	void setLocation(Location location) {
-		this.location=location;
+	void setX(int x) {
+		this.x=x;
 	}
-
+	void setY(int y) {
+		this.y=y;
+	}
 	void setPimage(Image imageData) {
 		this.pimage = imageData;
 	}

@@ -55,7 +55,7 @@ class MenuActionListener implements ActionListener {
 	}
 	  public void actionPerformed(ActionEvent e) {
 		  try {
-				PreparedStatement menuQuery = conn.prepareStatement("Select pname,cost,image,URL from product where pname = ?");
+				PreparedStatement menuQuery = conn.prepareStatement("Select pname,cost,image,URL,x,y from product where pname = ?");
 				String pstr = e.getActionCommand();
 				menuQuery.setString(1, pstr);
 				System.out.println(menuQuery);
@@ -67,6 +67,8 @@ class MenuActionListener implements ActionListener {
 					EGPS.textPname.setText(EGPS.PRODUCT.pname);
 					EGPS.textCost.setText(Integer.toString((EGPS.PRODUCT.cost)));
 					EGPS.PRODUCT.setURL(rset.getString(4));
+				    EGPS.PRODUCT.setX(rset.getInt(5));
+				    EGPS.PRODUCT.setY(rset.getInt(6));
 					EGPS.panel.repaint();
 				}
 			} catch (SQLException e1) {

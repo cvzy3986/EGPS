@@ -96,8 +96,7 @@ public class EGPS extends JFrame {
 		ArrayList<Image> arrFloor = new ArrayList<>();
 		getFloorImage(arrFloor,conn);
 
-		MapImage mapImage = new MapImage(arrFloor.get(0),0);
-
+		MapImage mapImage = new MapImage();
 		mapImage.setBounds(438, 376, 1000, 490);
 		getContentPane().add(mapImage);
 		
@@ -181,10 +180,6 @@ public class EGPS extends JFrame {
 		panel.setBounds(0, 0, 300, 276);
 		infoScreen.add(panel);	
 		
-		JPanel pointPanel = new JPanel();
-		pointPanel.setBounds(438, 376, 1000, 490);
-		getContentPane().add(pointPanel);
-		
 	}
 	public static void getFloorImage(ArrayList<Image> arrFloor,Connection conn){
 		try {
@@ -203,14 +198,18 @@ public class EGPS extends JFrame {
 }
 class MapImage extends JPanel{
 	private Image floor;
-	MapImage(Image floor , int index){
-		this.floor=floor;
-	}
 	public void setImage(Image floor){
 		this.floor=floor;
 	}
 	public void paint(Graphics g){
-		g.drawImage(floor,0,0,this);
+		if(floor != null){
+			g.drawImage(floor,0,0,this);
+		}
+		if(EGPS.PRODUCT.x != -1 && EGPS.PRODUCT.y != -1){
+			g.setColor(Color.RED);
+			g.fillOval(EGPS.PRODUCT.x, EGPS.PRODUCT.y, 30, 30);
+			
+		}
 	}
 }
 class ReturnMapImage{
