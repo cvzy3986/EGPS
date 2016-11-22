@@ -24,12 +24,14 @@ import javax.swing.table.DefaultTableModel;
 class SearchThread extends Thread{
 	JTextField textField;
 	Connection conn;
-	SearchThread(JTextField textField,Connection conn){
+	MapImage mapImage;
+	SearchThread(JTextField textField,Connection conn,MapImage mapImage){
 		this.textField= textField;
 		this.conn = conn;
+		this.mapImage = mapImage;
 	}
 	public  void run(){
-		   JFrame frame2 = new SearchFrame(textField,conn);
+		   JFrame frame2 = new SearchFrame(textField,conn,mapImage);
 		   frame2.setBounds(new Rectangle(1000, 950));
 		   frame2.setVisible(true);
 		   frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,10 +42,11 @@ class SearchFrame extends JFrame{
    private JPanel contentPane;
    private Connection conn;
    private JTextField textField;
-   public SearchFrame(JTextField textField,Connection conn) {
+   private MapImage mapImage;
+   public SearchFrame(JTextField textField,Connection conn,MapImage mapImage) {
 	    this.textField= textField;
 		this.conn = conn;
-		
+		this.mapImage = mapImage;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 780, 688);
 		contentPane = new JPanel();
@@ -94,6 +97,7 @@ class SearchFrame extends JFrame{
 					    EGPS.PRODUCT.setX(rset.getInt(5));
 					    EGPS.PRODUCT.setY(rset.getInt(6));
 						EGPS.panel.repaint();
+						mapImage.repaint();
 					}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block

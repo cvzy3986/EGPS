@@ -117,7 +117,7 @@ public class EGPS extends JFrame {
 		searchButton.setForeground(UIManager.getColor("Desktop.background"));
 		searchButton.setBounds(296, 753, 114, 50);
 		getContentPane().add(searchButton);
-		searchButton.addActionListener(new SearchButtonActionListener(textField,conn));
+		searchButton.addActionListener(new SearchButtonActionListener(textField,conn,mapImage));
 		
 				
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);  //tabbedPaneÀÌ ¹Ù²ð ¶§¸¶´Ù Áöµµ ¹Ù²ñ
@@ -184,14 +184,16 @@ public class EGPS extends JFrame {
 class SearchButtonActionListener implements ActionListener{
 	JTextField textField;
 	Connection conn;
-	SearchButtonActionListener(JTextField textField,Connection conn){
+	MapImage mapImage;
+	SearchButtonActionListener(JTextField textField,Connection conn,MapImage mapImage){
 		this.textField =textField;
 		this.conn  = conn;
+		this.mapImage = mapImage;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		SearchThread thread = new SearchThread(textField,conn);
+		SearchThread thread = new SearchThread(textField,conn,mapImage);
 		thread.start();
 	}
 }
