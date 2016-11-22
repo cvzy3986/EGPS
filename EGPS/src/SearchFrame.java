@@ -1,68 +1,100 @@
-
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.*;
-import java.util.*;
+import java.awt.TextField;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
-import javax.management.monitor.StringMonitor;
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-public class SearchFrame extends JFrame {
+
+class SearchThread extends Thread{
+	JTextField textField;
+	Connection conn;
+	SearchThread(JTextField textField,Connection conn){
+		this.textField= textField;
+		this.conn = conn;
+	}
+	public  void run(){
+		   JFrame frame = new SearchFrame(textField,conn);
+		   frame.setBounds(new Rectangle(1000, 950));
+		   frame.setVisible(true);
+		   frame.addWindowListener(new WindowAdapter() {
+			   public void windowClosing(WindowEvent e){
+				   frame.setVisible(false);
+				   frame.dispose();
+				   System.exit(0);
+			   }
+		});
+	   }
+}
+
+class SearchFrame extends JFrame{
    private JPanel contentPane;
-   private JTable tableOut;
-   private JScrollPane scrollPaneOut;
-   
-   public SearchFrame() {
-      
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      setBounds(100, 100, 780, 688);
-      contentPane = new JPanel();
-      contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-      setContentPane(contentPane);
-      contentPane.setLayout(null);
-      
-      String tag[] = {"상품명", "판매가" , "비고"};
-  String goods[][] = {{"사과","1,100원","1개(특대)"},
-            {"경북사과","9,800원","4kg 18내외"},
-            {"강원 사과즙","10,800원","2kg/팩"},
-            {"사과식초","3,880원","15개입 대란"},
-            {"농심 사과쥬스","950원","90g"},
-            {"말린 사과","3,150원","5입  600g"},
-            {"사과 잼","1,100원","1개(특대)"},
-            {"애플잼쿠키(사과맛)","5,480원","1000g"},
-      };
-      DefaultTableModel modelout =  new DefaultTableModel(goods, tag);
-      tableOut = new JTable(new DefaultTableModel(
-      	new Object[][] {
-      		{"\uC0AC\uACFC", "1,100\uC6D0", "1\uAC1C(\uD2B9\uB300)"},
-      		{"\uACBD\uBD81\uC0AC\uACFC", "9,800\uC6D0", "4kg 18\uB0B4\uC678"},
-      		{"\uAC15\uC6D0 \uC0AC\uACFC\uC999", "10,800\uC6D0", "2kg/\uD329"},
-      		{"\uC0AC\uACFC\uC2DD\uCD08", "3,880\uC6D0", "15\uAC1C\uC785 \uB300\uB780"},
-      		{"\uB18D\uC2EC \uC0AC\uACFC\uC96C\uC2A4", "950\uC6D0", "90g"},
-      		{"\uB9D0\uB9B0 \uC0AC\uACFC", "3,150\uC6D0", "5\uC785  600g"},
-      		{"\uC0AC\uACFC \uC7BC", "1,100\uC6D0", "1\uAC1C(\uD2B9\uB300)"},
-      		{"\uC560\uD50C\uC7BC\uCFE0\uD0A4(\uC0AC\uACFC\uB9DB)", "5,480\uC6D0", "1000g"},
-      	},
-      	new String[] {
-      		"\uC0C1\uD488\uBA85", "\uD310\uB9E4\uAC00", "\uBE44\uACE0"
-      	}
-      ));
-      tableOut.setColumnSelectionAllowed(true);
-      tableOut.setFont(new Font("굴림", Font.PLAIN, 13));
-      tableOut.setBounds(81, 337, 660, 215);
-      
-     
-      
-      scrollPaneOut = new JScrollPane(tableOut);
-      scrollPaneOut.setBounds(22, 40, 700, 600);
-      contentPane.add(scrollPaneOut);
-      
-      JLabel lblNewLabel = new JLabel("검색 기록");
-      lblNewLabel.setBounds(12, 10, 69, 20);
-      contentPane.add(lblNewLabel);
+   private Connection conn;
+   private JTextField textField;
+   public SearchFrame(JTextField textField,Connection conn) {
+	    this.textField= textField;
+		this.conn = conn;
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 780, 688);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		
+		String out[] = { "사진", "상품명", "가격" };
+		DefaultTableModel modelout = new DefaultTableModel(out, 10);
+		JLabel lblNewLabel = new JLabel("검색 기록");
+		lblNewLabel.setBounds(12, 10, 69, 20);
+		contentPane.add(lblNewLabel);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(22, 41, 950, 800);
+		getContentPane().add(scrollPane);
+		JTable table;
+		table = new JTable(modelout);
+		table.getTableHeader().setFont(new Font("Dialog", Font.BOLD, 23));
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.getColumnModel().getColumn(0).setPreferredWidth(305);
+		table.getColumnModel().getColumn(1).setPreferredWidth(450);
+		table.getColumnModel().getColumn(2).setPreferredWidth(150);
+		table.setRowHeight(100);
+		table.setFont(new Font("Dialog", Font.BOLD, 23));
+		table.setBounds(0, 0, 1100, 537);
+		scrollPane.setViewportView(table);
+		
+		
+		String product  = textField.getText();
+		try{
+			while(modelout.getRowCount() != 0)
+		    	modelout.removeRow(0);
+			PreparedStatement query = conn.prepareStatement("Select pname,cost from product where pname like ?");
+			query.setString(1, "%"+product+"%");
+			System.out.println(query);
+			ResultSet rset = query.executeQuery();
+			ArrayList<String> row = new ArrayList<>();
+			while(rset.next()){
+				row.add(rset.getString(1));
+				row.add(Integer.toString(rset.getInt(2)));
+				modelout.addRow(row.toArray());
+				row.clear();
+			}
+		}
+		catch(SQLException sqle){
+			System.out.println("SQLException : "+sqle);
+		}
    }
 }

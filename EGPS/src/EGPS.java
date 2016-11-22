@@ -105,35 +105,19 @@ public class EGPS extends JFrame {
 		JLabel logo = new JLabel(new GetlogoImage().logo);
 		logo.setBounds(17, 30, 441, 130);
 		getContentPane().add(logo);
+		
 		JTextField textField = new JTextField();
 		textField.setBounds(21, 753, 246, 50);
 		getContentPane().add(textField);
 		textField.setColumns(10);
 
 		JButton searchButton = new JButton("°Ë »ö");
-		searchButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		searchButton.setFont(new Font("±¼¸²", Font.BOLD, 27));
 		searchButton.setBackground(new Color(0, 0, 0));
 		searchButton.setForeground(UIManager.getColor("Desktop.background"));
 		searchButton.setBounds(296, 753, 114, 50);
 		getContentPane().add(searchButton);
-//		searchButton.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				JFrame serchFrame = new SearchFrame();
-//				serchFrame.setVisible(true);
-//				serchFrame.setSize(1400, 800);
-//				serchFrame.addWindowListener(new WindowAdapter() {
-//					public void windowClosing(WindowEvent e){
-//						serchFrame.dispose();
-//					}
-//				});
-//			}
-//		}
-		
+		searchButton.addActionListener(new SearchButtonActionListener(textField,conn));
 		
 				
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);  //tabbedPaneÀÌ ¹Ù²ð ¶§¸¶´Ù Áöµµ ¹Ù²ñ
@@ -196,6 +180,21 @@ public class EGPS extends JFrame {
 		}
 	}
 }
+
+class SearchButtonActionListener implements ActionListener{
+	JTextField textField;
+	Connection conn;
+	SearchButtonActionListener(JTextField textField,Connection conn){
+		this.textField =textField;
+		this.conn  = conn;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		SearchThread thread = new SearchThread(textField,conn);
+		thread.start();
+	}
+}
 class MapImage extends JPanel{
 	private Image floor;
 	public void setImage(Image floor){
@@ -207,7 +206,7 @@ class MapImage extends JPanel{
 		}
 		if(EGPS.PRODUCT.x != -1 && EGPS.PRODUCT.y != -1){
 			g.setColor(Color.RED);
-			g.fillOval(EGPS.PRODUCT.x, EGPS.PRODUCT.y, 30, 30);
+			g.fillOval(EGPS.PRODUCT.x, EGPS.PRODUCT.y, 50, 50);
 			
 		}
 	}
@@ -307,45 +306,7 @@ class GetlogoImage {
 }
 
 
-//class SearchButtonActionUser implements ActionListener{
-//	Connection conn;
-//	JTextField searchField;
-//	SearchButtonActionUser(Connection conn,JTextField searchField){
-//		this.conn = conn;
-//		this.searchField=searchField;
-//	}
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		// TODO Auto-generated method stub
-//		String product  = searchField.getText();
-//		try{
-////			while(EGPSAdmin.modelout.getRowCount() != 0)
-////		    	EGPSAdmin.modelout.removeRow(0);
-////			PreparedStatement query = conn.prepareStatement("Select * from product where pname like ?");
-////			query.setString(1, "%"+product+"%");
-////			System.out.println(query);
-////			ResultSet rset = query.executeQuery();
-////			ArrayList<String> row = new ArrayList<>();
-////			while(rset.next()){
-////				row.add(Integer.toString(rset.getInt(1)));
-////				row.add(rset.getString(2));
-////				row.add(Integer.toString(rset.getInt(3)));
-////				row.add(Integer.toString(rset.getInt(4)));
-////				row.add(rset.getString(5));
-////				row.add(Integer.toString(rset.getInt(6)));
-////				row.add(rset.getString(7));
-////				row.add(rset.getString(9));
-////				EGPSAdmin.modelout.addRow(row.toArray());
-////				row.clear();
-//			}
-//		}
-//		catch(SQLException sqle){
-//			System.out.println("SQLException : "+sqle);
-//		}
-//		
-//	}
-//	
-//}
+
 //class DBConnect{
 //static void DBConnectFunc(Connection conn){
 //	try {
