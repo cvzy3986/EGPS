@@ -161,8 +161,8 @@ public class EGPSAdmin extends JFrame {
 					PreparedStatement menuQuery = conn.prepareStatement("DELETE from product where pid = ?");
 					menuQuery.setString(1, pid);
 					System.out.println(menuQuery);
-					menuQuery.executeUpdate(); // 삭제 완료 but 리스트엔 그대로 남아있음 수정필요
-
+					menuQuery.executeUpdate();
+					PopupMenu.setPopMenuToButton(conn);	//팝업 메뉴 갱신
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
