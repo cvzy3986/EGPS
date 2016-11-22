@@ -111,12 +111,8 @@ class MenuActionListenerAdmin extends MenuActionListener{
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			}
 	  }
-	
 }
 class ReturnProductImage{
 	static Image returnImage(Blob data) throws Exception{

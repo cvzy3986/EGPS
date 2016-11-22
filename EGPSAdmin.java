@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -103,7 +105,7 @@ public class EGPSAdmin extends JFrame {
 		table = new JTable(modelout);
 		table.getTableHeader().setFont(new Font("Dialog", Font.BOLD, 16));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.getColumnModel().getColumn(0).setPreferredWidth(30);
+		table.getColumnModel().getColumn(0).setPreferredWidth(50);
 		table.getColumnModel().getColumn(1).setPreferredWidth(250);
 		table.getColumnModel().getColumn(2).setPreferredWidth(80);
 		table.getColumnModel().getColumn(3).setPreferredWidth(40);
@@ -125,11 +127,16 @@ public class EGPSAdmin extends JFrame {
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// 추가 눌렸을 때
-
-				// ※※※※PID는 자동 할당되도록 할것!!!!※※※※
-				// ※※※※PID는 자동 할당되도록 할것!!!!※※※※
-				// ※※※※PID는 자동 할당되도록 할것!!!!※※※※
-				// ※※※※PID는 자동 할당되도록 할것!!!!※※※※
+				// 추가할 물품의 pid를 구한다. pid = max(pid)+1 from product
+				try {
+						Statement stmt = conn.createStatement();
+						ResultSet rset = stmt.executeQuery("select max(pid)+1 addNum from product");
+						while (rset.next()) 
+							System.out.println("New pid : "+rset.getInt("addNum"));
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
 			}
 		});
 		addButton.setFont(new Font("굴림", Font.PLAIN, 40));
@@ -149,7 +156,6 @@ public class EGPSAdmin extends JFrame {
 
 				try {
 					// 리스트 내용 전부 삭제
-					// while(EGPSAdmin.modelout.getRowCount() != 0)
 					EGPSAdmin.modelout.removeRow(index);
 					// 삭제 쿼리
 					PreparedStatement menuQuery = conn.prepareStatement("DELETE from product where pid = ?");
@@ -181,36 +187,31 @@ public class EGPSAdmin extends JFrame {
 				String floor = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(3);
 				String category = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(4);
 				String cid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(5);
-				String location = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(6);
-				String URL = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(7);
-
+				String x = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(6);
+				String y = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(7);
+				String URL = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(8);
+				
 				try {
-					// 수정 쿼리 pid 제외 + @ 수정되면 안 될 값 ??? >> pid를 표시하면 안된다??
-					// PreparedStatement menuQuery =
-					// conn.prepareStatement("UPDATE product SET pname = ?, cost
-					// = ?, floor = ?, category = ?, cid = ?, location = ?, URL
-					// = ? where pid = ?");
 					PreparedStatement menuQuery = conn.prepareStatement(
-							"UPDATE product SET pname = ?, cost = ?, floor = ?, category = ?, cid = ? where pid = ?");
+							"UPDATE product SET pname = ?, cost = ?, floor = ?, category = ?, cid = ?, x = ?, y = ?, URL = ? where pid = ?");
 
 					menuQuery.setString(1, pname);
 					menuQuery.setString(2, cost);
 					menuQuery.setString(3, floor);
 					menuQuery.setString(4, category);
 					menuQuery.setString(5, cid);
-					// menuQuery.setString(6, "555");
 					menuQuery.setString(6, pid);
-					// menuQuery.setString(6, location);
-					// menuQuery.setString(7, URL);
-					// menuQuery.setString(8, pid);
+					menuQuery.setString(6, x);
+					menuQuery.setString(7, y);
+					menuQuery.setString(8, URL);
+					menuQuery.setString(9, pid);
 
 					System.out.println(menuQuery);
 					menuQuery.executeUpdate(); // 삭제 완료 but 리스트엔 그대로 남아있음 수정필요
-
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+				}updateTable(conn);
 			}
 		});
 		modifyButton.setFont(new Font("굴림", Font.PLAIN, 40));
@@ -226,7 +227,11 @@ public class EGPSAdmin extends JFrame {
 					String product = searchField.getText();
 					try {
 						while (EGPSAdmin.modelout.getRowCount() != 0)
+						{
+							String pid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(0)).elementAt(0);
+							
 							EGPSAdmin.modelout.removeRow(0);
+						}
 						PreparedStatement query = conn.prepareStatement(
 								"Select pid,pname,cost,floor,category,cid,x,y,url from product where pname like ?");
 						query.setString(1, "%" + product + "%");
@@ -259,19 +264,61 @@ public class EGPSAdmin extends JFrame {
 		searchField.setColumns(10);
 		searchButton.addActionListener(new SearchButtonAction(conn, searchField));
 
-		JButton resetButton = new JButton("\uCD08\uAE30\uD654");
+		JButton resetButton = new JButton("\uAC31\uC2E0");
 		resetButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// 초기화 버튼
-				while (EGPSAdmin.modelout.getRowCount() != 0)
-					EGPSAdmin.modelout.removeRow(0);
+				// 갱신 버튼 클릭 시
+				updateTable(conn);
 			}
 		});
 		resetButton.setFont(new Font("굴림", Font.PLAIN, 40));
 		resetButton.setBounds(774, 459, 152, 41);
 		getContentPane().add(resetButton);
 	}
+	
+	public static void updateTable(Connection conn)
+	{
+			// table에서 한줄씩 비우고 pid를 큐에 저장 
+			Queue update = new LinkedList();	//pid 저장
+			while (EGPSAdmin.modelout.getRowCount() != 0)
+			{
+				String pid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(0)).elementAt(0);
+				update.offer(pid);
+				EGPSAdmin.modelout.removeRow(0);
+			}
+			//큐가 null이 될때까지 pid를 꺼내서 해당하는 물품 정보를 table에 출력
+			while(update.peek() != null)
+			{
+				try 
+				{
+					PreparedStatement menuQuery = conn.prepareStatement("Select pid,pname,cost,floor,category,cid,x,y,url from product where pid = ?");
+					String pid = (String)update.poll();
+					menuQuery.setString(1, pid);
+					System.out.println(menuQuery);
+					ResultSet rset = menuQuery.executeQuery();
+					ArrayList<String> row = new ArrayList<>();
+					while(rset.next()){
+						row.add(rset.getString(1)); //pid
+						row.add(rset.getString(2));	//pname
+						row.add(rset.getString(3));	//cost
+						row.add(rset.getString(4));	//floor
+						row.add(rset.getString(5));	//category
+						row.add(rset.getString(6));	//cid
+						row.add(rset.getString(7));	//x
+						row.add(rset.getString(8));	//y
+						row.add(rset.getString(9));	//URL
+						EGPSAdmin.modelout.addRow(row.toArray());
+						row.clear();
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+	}
 }
+
+
 
 class SearchButtonAction implements ActionListener {
 	Connection conn;
