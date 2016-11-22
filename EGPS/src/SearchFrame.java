@@ -15,7 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 class SearchThread extends Thread{
@@ -26,16 +29,10 @@ class SearchThread extends Thread{
 		this.conn = conn;
 	}
 	public  void run(){
-		   JFrame frame = new SearchFrame(textField,conn);
-		   frame.setBounds(new Rectangle(1000, 950));
-		   frame.setVisible(true);
-		   frame.addWindowListener(new WindowAdapter() {
-			   public void windowClosing(WindowEvent e){
-				   frame.setVisible(false);
-				   frame.dispose();
-				   System.exit(0);
-			   }
-		});
+		   JFrame frame2 = new SearchFrame(textField,conn);
+		   frame2.setBounds(new Rectangle(1000, 950));
+		   frame2.setVisible(true);
+		   frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	   }
 }
 
@@ -55,7 +52,7 @@ class SearchFrame extends JFrame{
 		contentPane.setLayout(null);
 
 		
-		String out[] = { "사진", "상품명", "가격" };
+		String out[] = { "상품명", "가격"  };
 		DefaultTableModel modelout = new DefaultTableModel(out, 10);
 		JLabel lblNewLabel = new JLabel("검색 기록");
 		lblNewLabel.setBounds(12, 10, 69, 20);
@@ -68,14 +65,45 @@ class SearchFrame extends JFrame{
 		table = new JTable(modelout);
 		table.getTableHeader().setFont(new Font("Dialog", Font.BOLD, 23));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.getColumnModel().getColumn(0).setPreferredWidth(305);
-		table.getColumnModel().getColumn(1).setPreferredWidth(450);
-		table.getColumnModel().getColumn(2).setPreferredWidth(150);
+		table.getColumnModel().getColumn(0).setPreferredWidth(805);
+		table.getColumnModel().getColumn(1).setPreferredWidth(200);
+		
 		table.setRowHeight(100);
 		table.setFont(new Font("Dialog", Font.BOLD, 23));
 		table.setBounds(0, 0, 1100, 537);
 		scrollPane.setViewportView(table);
 		
+		ListSelectionModel model = table.getSelectionModel();
+		model.addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+			    System.out.println(table.getModel().getValueAt(model.getMinSelectionIndex(), 0));
+			    try {
+					PreparedStatement menuQuery = conn.prepareStatement("Select pname,cost,image,URL,x,y from product where pname = ?");
+					menuQuery.setString(1, table.getModel().getValueAt(model.getMinSelectionIndex(), 0).toString());
+					System.out.println(menuQuery);
+					ResultSet rset = menuQuery.executeQuery();
+					while(rset.next()){
+						EGPS.PRODUCT.setPname(rset.getString(1));
+						EGPS.PRODUCT.setCost(rset.getInt(2));
+						EGPS.PRODUCT.setPimage(ReturnProductImage.returnImage(rset.getBlob(3)));
+						EGPS.textPname.setText(EGPS.PRODUCT.pname);
+						EGPS.textCost.setText(Integer.toString((EGPS.PRODUCT.cost)));
+						EGPS.PRODUCT.setURL(rset.getString(4));
+					    EGPS.PRODUCT.setX(rset.getInt(5));
+					    EGPS.PRODUCT.setY(rset.getInt(6));
+						EGPS.panel.repaint();
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		String product  = textField.getText();
 		try{
