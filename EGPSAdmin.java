@@ -19,6 +19,8 @@ import javax.swing.JTextField;
 import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.UIManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
@@ -46,7 +48,7 @@ public class EGPSAdmin extends JFrame {
 			public void run() {
 				try {
 					EGPSAdmin frame = new EGPSAdmin();
-					frame.setBounds(new Rectangle(970, 570));
+					frame.setBounds(new Rectangle(960, 600));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -73,7 +75,7 @@ public class EGPSAdmin extends JFrame {
 		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 954, 573);
+		setBounds(100, 100, 954, 645);
 		getContentPane().setLayout(null);
 
 		JButton searchButton = new JButton("검 색");
@@ -103,6 +105,14 @@ public class EGPSAdmin extends JFrame {
 		String out[] = { "pid", "pname", "cost", "floor", "category", "cid", "x", "y", "URL" };
 		modelout.setColumnIdentifiers(out);
 		table = new JTable(modelout);
+//		ListSelectionModel model = table.getSelectionModel();
+//		 model.addListSelectionListener(new ListSelectionListener() {
+//			@Override
+//			public void valueChanged(ListSelectionEvent e) {
+//				// TODO Auto-generated method stub
+//				System.out.println(model.getMinSelectionIndex());
+//			}
+//		});
 		table.getTableHeader().setFont(new Font("Dialog", Font.BOLD, 16));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -118,7 +128,7 @@ public class EGPSAdmin extends JFrame {
 		table.setFillsViewportHeight(true);
 		table.setCellSelectionEnabled(true);
 		table.setRowHeight(40);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.setFont(new Font("Dialog", Font.PLAIN, 16));
 		table.setBounds(0, 0, 1100, 537);
 		scrollPane.setViewportView(table);
@@ -140,82 +150,88 @@ public class EGPSAdmin extends JFrame {
 			}
 		});
 		addButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		addButton.setBounds(317, 459, 135, 41);
+		addButton.setBounds(317, 511, 135, 41);
 		getContentPane().add(addButton);
 
 		JButton deleteButton = new JButton("\uC0AD\uC81C");
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// 삭제 눌렸을 때
-				int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
-				System.out.println("selected index : " + index);
-
-				// 테이블에서 선택된 행의 pid를 구한다.
-				String pid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(0);
-				System.out.println("selected pid : " + pid);
-
-				try {
-					// 리스트 내용 전부 삭제
-					EGPSAdmin.modelout.removeRow(index);
-					// 삭제 쿼리
-					PreparedStatement menuQuery = conn.prepareStatement("DELETE from product where pid = ?");
-					menuQuery.setString(1, pid);
-					System.out.println(menuQuery);
-					menuQuery.executeUpdate();
-					PopupMenu.setPopMenuToButton(conn);	//팝업 메뉴 갱신
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				OnePro_admin.change(table, conn);
+//				Multi_admin.change(conn);
+				Spec_admin.change(table, conn);
+//				int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
+//				System.out.println("selected index : " + index);
+//
+//				// 테이블에서 선택된 행의 pid를 구한다.
+//				String pid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(0);
+//				System.out.println("selected pid : " + pid);
+//
+//				try {
+//					// 리스트 내용 전부 삭제
+//					EGPSAdmin.modelout.removeRow(index);
+//					// 삭제 쿼리
+//					PreparedStatement menuQuery = conn.prepareStatement("DELETE from product where pid = ?");
+//					menuQuery.setString(1, pid);
+//					System.out.println(menuQuery);
+//					menuQuery.executeUpdate();
+//					PopupMenu.setPopMenuToButton(conn);	//팝업 메뉴 갱신
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 			}
 		});
 		deleteButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		deleteButton.setBounds(464, 459, 135, 41);
+		deleteButton.setBounds(464, 511, 135, 41);
 		getContentPane().add(deleteButton);
 
 		JButton modifyButton = new JButton("\uC218\uC815");
 		modifyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// 수정 눌렸을 때
-				int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
-				// System.out.println("selected index : "+index);
-
-				// 테이블에서 선택된 행의 정보를 받는다.
-				String pid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(0);
-				String pname = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(1);
-				String cost = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(2);
-				String floor = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(3);
-				String category = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(4);
-				String cid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(5);
-				String x = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(6);
-				String y = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(7);
-				String URL = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(8);
-				
-				try {
-					PreparedStatement menuQuery = conn.prepareStatement(
-							"UPDATE product SET pname = ?, cost = ?, floor = ?, category = ?, cid = ?, x = ?, y = ?, URL = ? where pid = ?");
-
-					menuQuery.setString(1, pname);
-					menuQuery.setString(2, cost);
-					menuQuery.setString(3, floor);
-					menuQuery.setString(4, category);
-					menuQuery.setString(5, cid);
-					menuQuery.setString(6, pid);
-					menuQuery.setString(6, x);
-					menuQuery.setString(7, y);
-					menuQuery.setString(8, URL);
-					menuQuery.setString(9, pid);
-
-					System.out.println(menuQuery);
-					menuQuery.executeUpdate(); // 삭제 완료 but 리스트엔 그대로 남아있음 수정필요
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}updateTable(conn);
+//				Multi_admin.change(conn);
+//				OnePro_admin.change(table, conn);
+//				Spec_admin.change(table, conn);
+//				// 수정 눌렸을 때
+//				int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
+//				// System.out.println("selected index : "+index);
+//
+//				// 테이블에서 선택된 행의 정보를 받는다.
+//				String pid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(0);
+//				String pname = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(1);
+//				String cost = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(2);
+//				String floor = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(3);
+//				String category = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(4);
+//				String cid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(5);
+//				String x = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(6);
+//				String y = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(7);
+//				String URL = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(8);
+//				
+//				try {
+//					PreparedStatement menuQuery = conn.prepareStatement(
+//							"UPDATE product SET pname = ?, cost = ?, floor = ?, category = ?, cid = ?, x = ?, y = ?, URL = ? where pid = ?");
+//
+//					menuQuery.setString(1, pname);
+//					menuQuery.setString(2, cost);
+//					menuQuery.setString(3, floor);
+//					menuQuery.setString(4, category);
+//					menuQuery.setString(5, cid);
+//					menuQuery.setString(6, pid);
+//					menuQuery.setString(6, x);
+//					menuQuery.setString(7, y);
+//					menuQuery.setString(8, URL);
+//					menuQuery.setString(9, pid);
+//
+//					System.out.println(menuQuery);
+//					menuQuery.executeUpdate(); // 삭제 완료 but 리스트엔 그대로 남아있음 수정필요
+//				} catch (SQLException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}updateTable(conn);
 			}
 		});
 		modifyButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		modifyButton.setBounds(611, 459, 135, 41);
+		modifyButton.setBounds(611, 511, 135, 41);
 		getContentPane().add(modifyButton);
 
 		JTextField searchField = new JTextField();
@@ -264,16 +280,49 @@ public class EGPSAdmin extends JFrame {
 		searchField.setColumns(10);
 		searchButton.addActionListener(new SearchButtonAction(conn, searchField));
 
-		JButton resetButton = new JButton("\uAC31\uC2E0");
-		resetButton.addActionListener(new ActionListener() {
+		JButton updateButton = new JButton("\uAC31\uC2E0");
+		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// 갱신 버튼 클릭 시
-				updateTable(conn);
+				//updateTable(conn);
+				//PopupMenu.setPopMenuToButton(conn);	//팝업 메뉴 갱신
+				int count = table.getSelectedRowCount();
+				System.out.println("선택 수 : "+count);
+				while(count-- != 0)
+				{
+//					int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
+					int index[] = table.getSelectedRows();
+					System.out.println("인덱스 번호 : "+index[(table.getSelectedRowCount()-1)-count]);
+				}
 			}
 		});
-		resetButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		resetButton.setBounds(774, 459, 152, 41);
-		getContentPane().add(resetButton);
+		updateButton.setFont(new Font("굴림", Font.PLAIN, 40));
+		updateButton.setBounds(611, 460, 135, 41);
+		getContentPane().add(updateButton);
+		
+		JButton removeButton = new JButton("\uC9C0\uC6B0\uAE30");
+		removeButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//지우기 버튼 클릭 시 , 선택한 물품 테이블에서 뺀다
+				int index = table.getSelectedRow();
+				EGPSAdmin.modelout.removeRow(index);
+			}
+		});
+		removeButton.setFont(new Font("굴림", Font.PLAIN, 33));
+		removeButton.setBounds(317, 459, 135, 42);
+		getContentPane().add(removeButton);
+		JButton cleanButton = new JButton("\uBE44\uC6B0\uAE30");
+		cleanButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//비우기 버튼 클릭시 , 테이블은 비운다.
+				while (EGPSAdmin.modelout.getRowCount() != 0)
+						EGPSAdmin.modelout.removeRow(0);
+			}
+		});
+		cleanButton.setFont(new Font("굴림", Font.PLAIN, 33));
+		cleanButton.setBounds(464, 459, 135, 42);
+		
+		getContentPane().add(cleanButton);
 	}
 	
 	public static void updateTable(Connection conn)
@@ -317,8 +366,6 @@ public class EGPSAdmin extends JFrame {
 			}
 	}
 }
-
-
 
 class SearchButtonAction implements ActionListener {
 	Connection conn;
