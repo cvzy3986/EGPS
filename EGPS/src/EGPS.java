@@ -181,6 +181,10 @@ public class EGPS extends JFrame {
 				if(resultStr.equals("123")){
 					System.out.println("관리자 실행");
 				}
+				else{
+					JOptionPane.showMessageDialog(null, "비밀번호 오류", "오류", JOptionPane.ERROR_MESSAGE);
+					
+				}
 			}
 		});
 		
