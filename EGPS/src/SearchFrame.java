@@ -1,4 +1,5 @@
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.TextField;
 import java.awt.event.WindowAdapter;
@@ -44,6 +45,7 @@ class SearchFrame extends JFrame{
    private JTextField textField;
    private MapImage mapImage;
    public SearchFrame(JTextField textField,Connection conn,MapImage mapImage) {
+	   
 	    this.textField= textField;
 		this.conn = conn;
 		this.mapImage = mapImage;
@@ -53,7 +55,9 @@ class SearchFrame extends JFrame{
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
+		
+	    ArrayList<Image> arrFloor = new ArrayList<>();
+	    EGPS.getFloorImage(arrFloor,conn);
 		
 		String out[] = { "상품명", "가격"  };
 		DefaultTableModel modelout = new DefaultTableModel(out, 10);
@@ -82,8 +86,9 @@ class SearchFrame extends JFrame{
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
 			    System.out.println(table.getModel().getValueAt(model.getMinSelectionIndex(), 0));
+			   
 			    try {
-					PreparedStatement menuQuery = conn.prepareStatement("Select pname,cost,image,URL,x,y from product where pname = ?");
+					PreparedStatement menuQuery = conn.prepareStatement("Select pname,cost,image,URL,x,y,floor from product where pname = ?");
 					menuQuery.setString(1, table.getModel().getValueAt(model.getMinSelectionIndex(), 0).toString());
 					System.out.println(menuQuery);
 					ResultSet rset = menuQuery.executeQuery();
@@ -97,6 +102,8 @@ class SearchFrame extends JFrame{
 					    EGPS.PRODUCT.setX(rset.getInt(5));
 					    EGPS.PRODUCT.setY(rset.getInt(6));
 						EGPS.panel.repaint();
+						int index = rset.getInt(7)-1;
+						mapImage.setImage(arrFloor.get(index));
 						mapImage.repaint();
 					}
 				} catch (SQLException e1) {
