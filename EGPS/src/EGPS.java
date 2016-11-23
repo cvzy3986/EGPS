@@ -35,6 +35,7 @@ import javax.swing.JSpinner;
 import javax.swing.JSeparator;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Graphics;
@@ -166,6 +167,22 @@ public class EGPS extends JFrame {
 		
 		panel.setBounds(0, 0, 300, 276);
 		infoScreen.add(panel);	
+		
+		JButton adminButton = new JButton("관리자");
+		adminButton.setFont(new Font("굴림", Font.PLAIN, 30));
+		adminButton.setBounds(17, 818, 393, 62);
+		getContentPane().add(adminButton);
+		adminButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String resultStr = null;
+				resultStr = JOptionPane.showInputDialog("비밀번호 입력하세요.");
+				if(resultStr.equals("123")){
+					System.out.println("관리자 실행");
+				}
+			}
+		});
 		
 	}
 	public static void getFloorImage(ArrayList<Image> arrFloor,Connection conn){
