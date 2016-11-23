@@ -10,7 +10,7 @@ public class Product {
 	int y = -1;
 	Image pimage;
 	String URL;
-	void set(int pid,String pname,int cost,Location location,Image imageData,String URL){
+	void set(int pid,String pname,int cost,int x,int y,Image imageData,String URL){
 		this.pid=pid;
 		this.pname=pname;
 		this.cost = cost;
@@ -45,12 +45,4 @@ public class Product {
 		this.URL =URL;
 	}
 
-}
-class Location{
-	int x;
-	int y;
-	Location(int x,int y){
-		this.x=x;
-		this.y=y;
-	}
 }

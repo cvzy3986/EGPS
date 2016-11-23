@@ -52,6 +52,10 @@ public class Buttons {
 	}
 }
 class MouseClickEvent extends MouseAdapter{
+	/**
+	 * @brief 카테고리 버튼 클릭이벤트 클래스
+	 * @details PopupMenu: 
+	 */
 	int index;
 	JButton button;
 	PopupMenu popmenus;
@@ -62,6 +66,10 @@ class MouseClickEvent extends MouseAdapter{
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		/**
+		 * @brief 마우스 클릭이벤트
+		 * @details 
+		 */
 		popmenus.pop.get(index).show(e.getComponent(), e.getX(), e.getY());
 	}
 	

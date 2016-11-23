@@ -62,6 +62,9 @@ public class EGPS extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				/**
+				 * @brief 메인 프레임 실행 				 
+				 */
 				try {
 					EGPS frame = new EGPS();
 					frame.setBounds(new Rectangle(1468, 950));
