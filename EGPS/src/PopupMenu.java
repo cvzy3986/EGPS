@@ -50,6 +50,7 @@ public class PopupMenu extends	JFrame {
 }
 class MenuActionListener implements ActionListener {
 	Connection conn;
+	ProAdmin_form paf = new ProAdmin_form();
 	MenuActionListener(Connection conn){
 		this.conn = conn;
 	}
@@ -63,9 +64,10 @@ class MenuActionListener implements ActionListener {
 				while(rset.next()){
 					EGPS.PRODUCT.setPname(rset.getString(1));
 					EGPS.PRODUCT.setCost(rset.getInt(2));
+					String cost = paf.Func(EGPS.PRODUCT.cost);
 					EGPS.PRODUCT.setPimage(ReturnProductImage.returnImage(rset.getBlob(3)));
 					EGPS.textPname.setText(EGPS.PRODUCT.pname);
-					EGPS.textCost.setText(Integer.toString((EGPS.PRODUCT.cost)));
+					EGPS.textCost.setText(cost);
 					EGPS.PRODUCT.setURL(rset.getString(4));
 				    EGPS.PRODUCT.setX(rset.getInt(5));
 				    EGPS.PRODUCT.setY(rset.getInt(6));
