@@ -93,7 +93,8 @@ public class EGPS extends JFrame {
 		} catch (SQLException sqex) {
 			System.out.println("SQLException: " + sqex.getMessage());
 		}
-
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1468, 950);
 		getContentPane().setLayout(null);
@@ -203,6 +204,7 @@ public class EGPS extends JFrame {
 			e.printStackTrace();
 		}
 	}
+
 }
 
 class SearchButtonActionListener implements ActionListener{
@@ -221,22 +223,7 @@ class SearchButtonActionListener implements ActionListener{
 		thread.start();
 	}
 }
-class MapImage extends JPanel{
-	private Image floor;
-	public void setImage(Image floor){
-		this.floor=floor;
-	}
-	public void paint(Graphics g){
-		if(floor != null){
-			g.drawImage(floor,0,0,this);
-		}
-		if(EGPS.PRODUCT.x != -1 && EGPS.PRODUCT.y != -1){
-			g.setColor(Color.RED);
-			g.fillOval(EGPS.PRODUCT.x, EGPS.PRODUCT.y, 50, 50);
-			
-		}
-	}
-}
+
 class ReturnMapImage{
 	static Image returnImage(Blob data) throws Exception{
 		Image temp = ImageIO.read(data.getBinaryStream());
@@ -244,78 +231,6 @@ class ReturnMapImage{
 		return temp2;
 	}
 }
-class TabChangeListener implements ChangeListener {
-	MapImage mapImage;
-	ArrayList<Image> arrFloor;
-	TabChangeListener(MapImage mapImage, ArrayList<Image> arrFloor){
-		this.mapImage=mapImage;
-		this.arrFloor=arrFloor;
-	}
-    public void stateChanged(ChangeEvent changeEvent) {
-        JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-        int index = sourceTabbedPane.getSelectedIndex();
-  
-        mapImage.setImage(arrFloor.get(index));
-        mapImage.repaint();
-    }
-}
-
-class ProductDrawImage extends JPanel{
-	public void paint(Graphics g){
-        g.drawImage(EGPS.PRODUCT.pimage,0,0,this);
-	}
-	ProductDrawImage(){
-		addMouseListener(new MouseAdapter() {
-	        @Override
-	        public void mousePressed(MouseEvent e) {
-	        	 java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-	        	 java.net.URI uri;
-				try {
-					uri = new java.net.URI(EGPS.PRODUCT.URL);
-					desktop.browse(uri);
-				} catch (URISyntaxException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}catch (IOException ioe){
-					ioe.printStackTrace();
-				}
-	        }
-	    });
-	}
-}
-
-class Category_Screen{
-	Panels panels;
-	Category_Screen(Connection conn){
-		panels = new Panels(conn);
-	}
-}
-class Panels{
-	JPanel panelArray[];
-	Panels(Connection conn){
-		setButtonToPanel(conn);
-	}
-	void setButtonToPanel(Connection conn){
-		Buttons Jbuttons= new Buttons(conn);
-		panelArray = new JPanel[Jbuttons.floorNum];
-		for(int i=0;i<Jbuttons.floorNum;i++){
-			panelArray[i]  = new JPanel();
-			panelArray[i].setLayout(new GridLayout(10,1));
-		}
-		for (int j = 0; j < Jbuttons.Categorys.size(); j++) {
-			if (Jbuttons.Categorys.get(j).floor == 1) {
-				panelArray[0].add(Jbuttons.CategoryButtons[j]);
-			} else if (Jbuttons.Categorys.get(j).floor == 2) {
-				panelArray[1].add(Jbuttons.CategoryButtons[j]);
-			} else if (Jbuttons.Categorys.get(j).floor == 3) {
-				panelArray[2].add(Jbuttons.CategoryButtons[j]);
-			}
-			
-		}
-	}
-	
-}
-
 class GetlogoImage {
 	ImageIcon logo = null;
 	GetlogoImage() {
@@ -333,18 +248,19 @@ class GetlogoImage {
 
 
 
-//class DBConnect{
-//static void DBConnectFunc(Connection conn){
-//	try {
-//		Class.forName("com.mysql.jdbc.Driver");
-//	} catch (ClassNotFoundException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
-//	try {
-//		conn = DriverManager.getConnection("jdbc:mysql://165.229.89.148/mart?autoReconnect=true","team8", "password");
-//	} catch (SQLException sqex) {
-//		System.out.println("SQLException: " + sqex.getMessage());
-//	}
-//}
-//}
+class DBConnect{
+	static void DBConnectFunc(Connection conn){
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			conn = DriverManager.getConnection("jdbc:mysql://165.229.89.148/mart?autoReconnect=true", "team8",
+					"password");
+		} catch (SQLException sqex) {
+			System.out.println("SQLException: " + sqex.getMessage());
+		}
+	}
+}
