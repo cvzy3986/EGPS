@@ -157,29 +157,26 @@ public class EGPSAdmin extends JFrame {
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// 삭제 눌렸을 때
-//				OnePro_admin.change(table, conn);
-//				Multi_admin.change(conn);
-				Spec_admin.change(table, conn);
-//				int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
-//				System.out.println("selected index : " + index);
-//
-//				// 테이블에서 선택된 행의 pid를 구한다.
-//				String pid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(0);
-//				System.out.println("selected pid : " + pid);
-//
-//				try {
-//					// 리스트 내용 전부 삭제
-//					EGPSAdmin.modelout.removeRow(index);
-//					// 삭제 쿼리
-//					PreparedStatement menuQuery = conn.prepareStatement("DELETE from product where pid = ?");
-//					menuQuery.setString(1, pid);
-//					System.out.println(menuQuery);
-//					menuQuery.executeUpdate();
-//					PopupMenu.setPopMenuToButton(conn);	//팝업 메뉴 갱신
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}
+				int select = table.getSelectedRow();
+				
+				if(select == 1) // 물품 1개
+				{
+					ProductAdmin obj = new OnePro_admin();
+				}
+				else
+				{
+					select = table.getRowCount()-select;
+					if(select == 0) // 테이블 전체 물품
+					{
+						ProductAdmin obj = new Multi_admin();
+					}
+					else			//	선택된 물품
+					{
+						ProductAdmin obj = new Spec_admin();
+					}
+				}
+				ProductAdmin obj = new OnePro_admin();
+				obj.change(table, conn); // delete
 			}
 		});
 		deleteButton.setFont(new Font("굴림", Font.PLAIN, 40));
@@ -189,45 +186,27 @@ public class EGPSAdmin extends JFrame {
 		JButton modifyButton = new JButton("\uC218\uC815");
 		modifyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				Multi_admin.change(conn);
-//				OnePro_admin.change(table, conn);
-//				Spec_admin.change(table, conn);
-//				// 수정 눌렸을 때
-//				int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
-//				// System.out.println("selected index : "+index);
-//
-//				// 테이블에서 선택된 행의 정보를 받는다.
-//				String pid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(0);
-//				String pname = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(1);
-//				String cost = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(2);
-//				String floor = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(3);
-//				String category = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(4);
-//				String cid = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(5);
-//				String x = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(6);
-//				String y = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(7);
-//				String URL = (String) ((Vector) EGPSAdmin.modelout.getDataVector().elementAt(index)).elementAt(8);
-//				
-//				try {
-//					PreparedStatement menuQuery = conn.prepareStatement(
-//							"UPDATE product SET pname = ?, cost = ?, floor = ?, category = ?, cid = ?, x = ?, y = ?, URL = ? where pid = ?");
-//
-//					menuQuery.setString(1, pname);
-//					menuQuery.setString(2, cost);
-//					menuQuery.setString(3, floor);
-//					menuQuery.setString(4, category);
-//					menuQuery.setString(5, cid);
-//					menuQuery.setString(6, pid);
-//					menuQuery.setString(6, x);
-//					menuQuery.setString(7, y);
-//					menuQuery.setString(8, URL);
-//					menuQuery.setString(9, pid);
-//
-//					System.out.println(menuQuery);
-//					menuQuery.executeUpdate(); // 삭제 완료 but 리스트엔 그대로 남아있음 수정필요
-//				} catch (SQLException e1) {
-//					// TODO Auto-generated catch block
-//					e1.printStackTrace();
-//				}updateTable(conn);
+				// 수정 눌렸을 때
+				int select = table.getSelectedRow();
+				
+				if(select == 1) // 물품 1개
+				{
+					ProductAdmin obj = new OnePro_admin();
+				}
+				else
+				{
+					select = table.getRowCount()-select;
+					if(select == 0) // 테이블 전체 물품
+					{
+						ProductAdmin obj = new Multi_admin();
+					}
+					else			//	선택된 물품
+					{
+						ProductAdmin obj = new Spec_admin();
+					}
+				}
+				ProductAdmin obj = new OnePro_admin();
+				obj.change(table, conn,true); // modify
 			}
 		});
 		modifyButton.setFont(new Font("굴림", Font.PLAIN, 40));
