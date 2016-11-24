@@ -2,6 +2,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
@@ -33,7 +35,7 @@ class SearchThread extends Thread{
 	}
 	public  void run(){
 		   JFrame frame2 = new SearchFrame(textField,conn,mapImage);
-		   frame2.setBounds(new Rectangle(1000, 950));
+		   frame2.setBounds(new Rectangle(1000, 500));
 		   frame2.setVisible(true);
 		   frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	   }
@@ -141,4 +143,21 @@ class SearchFrame extends JFrame{
 			System.out.println("SQLException : "+sqle);
 		}
    }
+}
+
+class SearchButtonActionListener implements ActionListener{
+	JTextField textField;
+	Connection conn;
+	MapImage mapImage;
+	SearchButtonActionListener(JTextField textField,Connection conn,MapImage mapImage){
+		this.textField =textField;
+		this.conn  = conn;
+		this.mapImage = mapImage;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		SearchThread thread = new SearchThread(textField,conn,mapImage);
+		thread.start();
+	}
 }

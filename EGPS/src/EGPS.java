@@ -56,7 +56,7 @@ public class EGPS extends JFrame {
 	public static JTextPane textCost = new JTextPane();
 	public static ProductDrawImage panel = new ProductDrawImage();
 	
-	Connection conn;
+	private Connection conn;
 	/**
 	 * Launch the application.
 	 */
@@ -107,7 +107,7 @@ public class EGPS extends JFrame {
 		
 	
 
-		JLabel logo = new JLabel(new GetlogoImage().logo);
+		JLabel logo = new JLabel(new GetlogoImage(conn).logo);
 		logo.setBounds(17, 30, 441, 130);
 		getContentPane().add(logo);
 		
@@ -212,33 +212,23 @@ public class EGPS extends JFrame {
 
 }
 
-class SearchButtonActionListener implements ActionListener{
-	JTextField textField;
-	Connection conn;
-	MapImage mapImage;
-	SearchButtonActionListener(JTextField textField,Connection conn,MapImage mapImage){
-		this.textField =textField;
-		this.conn  = conn;
-		this.mapImage = mapImage;
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		SearchThread thread = new SearchThread(textField,conn,mapImage);
-		thread.start();
-	}
-}
-
 class GetlogoImage {
 	ImageIcon logo = null;
-	GetlogoImage() {
-		File sourceImage = new File("log.png");
+	GetlogoImage(Connection conn) {
 		try {
-			Image temp = ImageIO.read(sourceImage);
+			Statement stmt = conn.createStatement(); 
+			ResultSet rset = stmt.executeQuery("Select image from logo where id=1");
+			Image temp = null;
+			while(rset.next()){
+				temp = ImageIO.read(rset.getBlob(1).getBinaryStream());
+			}
 			Image temp2 = temp.getScaledInstance(441, 130, Image.SCALE_SMOOTH);
 			logo = new ImageIcon(temp2);
-		} catch (IOException e) {
+			
+		} catch (SQLException se) {
 			// TODO Auto-generated catch block
+			se.printStackTrace();
+		} catch (Exception e){
 			e.printStackTrace();
 		}
 	}
