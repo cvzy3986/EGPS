@@ -34,12 +34,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
 
 public class EGPSAdmin extends JFrame {
 	Connection conn;
 	private JScrollPane scrollPane;
 	public static DefaultTableModel modelout = new DefaultTableModel();
-
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	static int select = 1;
 	/**
 	 * Launch the application.
 	 */
@@ -73,7 +76,6 @@ public class EGPSAdmin extends JFrame {
 		} catch (SQLException sqex) {
 			System.out.println("SQLException: " + sqex.getMessage());
 		}
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 954, 645);
 		getContentPane().setLayout(null);
@@ -150,68 +152,65 @@ public class EGPSAdmin extends JFrame {
 			}
 		});
 		addButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		addButton.setBounds(317, 511, 135, 41);
+		addButton.setBounds(497, 507, 135, 41);
 		getContentPane().add(addButton);
-
+		
 		JButton deleteButton = new JButton("\uC0AD\uC81C");
+
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// 삭제 눌렸을 때
-				int select = table.getSelectedRow();
+				ProductAdmin obj = null;
 				
 				if(select == 1) // 물품 1개
-				{
-					ProductAdmin obj = new OnePro_admin();
-				}
-				else
-				{
-					select = table.getRowCount()-select;
-					if(select == 0) // 테이블 전체 물품
-					{
-						ProductAdmin obj = new Multi_admin();
-					}
-					else			//	선택된 물품
-					{
-						ProductAdmin obj = new Spec_admin();
-					}
-				}
-				ProductAdmin obj = new OnePro_admin();
+					obj = new OnePro_admin();
+				else if(select == 2) // 테이블 전체 물품
+					obj = new Multi_admin();
+				else if(select == 3) //	선택된 물품
+					obj = new Spec_admin();
+				
 				obj.change(table, conn); // delete
 			}
 		});
 		deleteButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		deleteButton.setBounds(464, 511, 135, 41);
+		deleteButton.setBounds(791, 507, 135, 41);
 		getContentPane().add(deleteButton);
 
 		JButton modifyButton = new JButton("\uC218\uC815");
 		modifyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// 수정 눌렸을 때
-				int select = table.getSelectedRow();
+				ProductAdmin obj = null;
 				
 				if(select == 1) // 물품 1개
-				{
-					ProductAdmin obj = new OnePro_admin();
-				}
-				else
-				{
-					select = table.getRowCount()-select;
-					if(select == 0) // 테이블 전체 물품
-					{
-						ProductAdmin obj = new Multi_admin();
-					}
-					else			//	선택된 물품
-					{
-						ProductAdmin obj = new Spec_admin();
-					}
-				}
-				ProductAdmin obj = new OnePro_admin();
+					obj = new OnePro_admin();
+				else if(select == 2) // 테이블 전체 물품
+					obj = new Multi_admin();
+				else if(select == 3) //	선택된 물품
+					obj = new Spec_admin();
+				
 				obj.change(table, conn,true); // modify
 			}
 		});
 		modifyButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		modifyButton.setBounds(611, 511, 135, 41);
+		modifyButton.setBounds(644, 507, 135, 41);
 		getContentPane().add(modifyButton);
+		
+		JButton Categoryadd = new JButton("카테고리 추가");
+		Categoryadd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+//						JOptionPane.showMessageDialog(null, "로그인 되었습니다.");
+						
+						Category_admin mana = new Category_admin(conn);
+						mana.setBounds(new Rectangle(1068, 950));			
+						mana.setVisible(true);
+					}
+				});
+	
+		Categoryadd.setFont(new Font("굴림", Font.PLAIN, 30));
+		Categoryadd.setBounds(12, 477, 293, 50);
+		getContentPane().add(Categoryadd);
+		
 
 		JTextField searchField = new JTextField();
 		// 엔터 입력으로 검색
@@ -276,7 +275,7 @@ public class EGPSAdmin extends JFrame {
 			}
 		});
 		updateButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		updateButton.setBounds(611, 460, 135, 41);
+		updateButton.setBounds(791, 459, 135, 41);
 		getContentPane().add(updateButton);
 		
 		JButton removeButton = new JButton("\uC9C0\uC6B0\uAE30");
@@ -288,7 +287,7 @@ public class EGPSAdmin extends JFrame {
 			}
 		});
 		removeButton.setFont(new Font("굴림", Font.PLAIN, 33));
-		removeButton.setBounds(317, 459, 135, 42);
+		removeButton.setBounds(497, 459, 135, 41);
 		getContentPane().add(removeButton);
 		JButton cleanButton = new JButton("\uBE44\uC6B0\uAE30");
 		cleanButton.addActionListener(new ActionListener() {
@@ -299,9 +298,43 @@ public class EGPSAdmin extends JFrame {
 			}
 		});
 		cleanButton.setFont(new Font("굴림", Font.PLAIN, 33));
-		cleanButton.setBounds(464, 459, 135, 42);
+		cleanButton.setBounds(644, 459, 135, 41);
 		
 		getContentPane().add(cleanButton);
+		
+		JRadioButton oneRadio = new JRadioButton("\uC120\uD0DD\uD55C \uBB3C\uD488");
+		buttonGroup.add(oneRadio);
+		oneRadio.setBounds(339, 466, 121, 23);
+		getContentPane().add(oneRadio);
+		oneRadio.setSelected(true);
+		oneRadio.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if(oneRadio.isSelected())	select = 1;
+				
+			}
+		});
+			
+		JRadioButton multiRadio = new JRadioButton("\uD14C\uC774\uBE14 \uC804\uCCB4");
+		buttonGroup.add(multiRadio);
+		multiRadio.setBounds(339, 496, 121, 23);
+		getContentPane().add(multiRadio);
+		multiRadio.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if(multiRadio.isSelected())	select = 2;
+			
+			}
+		});
+		
+		JRadioButton specRadio = new JRadioButton("\uC120\uD0DD\uB41C \uBB3C\uD488\uB4E4");
+		buttonGroup.add(specRadio);
+		specRadio.setBounds(339, 526, 121, 23);
+		getContentPane().add(specRadio);
+		specRadio.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if(specRadio.isSelected())	select = 3;
+			}
+		});
+
 	}
 	
 	public static void updateTable(Connection conn)
@@ -344,98 +377,4 @@ public class EGPSAdmin extends JFrame {
 				}
 			}
 	}
-}
-
-class SearchButtonAction implements ActionListener {
-	Connection conn;
-	JTextField searchField;
-
-	SearchButtonAction(Connection conn, JTextField searchField) {
-		this.conn = conn;
-		this.searchField = searchField;
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		String product = searchField.getText();
-		try {
-			while (EGPSAdmin.modelout.getRowCount() != 0)
-				EGPSAdmin.modelout.removeRow(0);
-			PreparedStatement query = conn.prepareStatement(
-					"Select pid,pname,cost,floor,category,cid,x,y,url from product where pname like ?");
-			query.setString(1, "%" + product + "%");
-			System.out.println(query);
-			ResultSet rset = query.executeQuery();
-			ArrayList<String> row = new ArrayList<>();
-			while (rset.next()) {
-				row.add(rset.getString(1)); // pid
-				row.add(rset.getString(2)); // pname
-				row.add(rset.getString(3)); // cost
-				row.add(rset.getString(4)); // floor
-				row.add(rset.getString(5)); // category
-				row.add(rset.getString(6)); // cid
-				row.add(rset.getString(7)); // x
-				row.add(rset.getString(8)); // y
-				row.add(rset.getString(9)); // URL
-				EGPSAdmin.modelout.addRow(row.toArray());
-				row.clear();
-			}
-		} catch (SQLException sqle) {
-			System.out.println("SQLException : " + sqle);
-		}
-	}
-}
-
-class DBConnect {
-	static void DBConnectFunc(Connection conn) {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://165.229.89.148/mart?autoReconnect=true", "team8",
-					"password");
-		} catch (SQLException sqex) {
-			System.out.println("SQLException: " + sqex.getMessage());
-		}
-	}
-}
-
-class Category_Screen {
-	Panels panels;
-
-	Category_Screen(Connection conn) {
-		panels = new Panels(conn);
-	}
-}
-
-class Panels {
-	JPanel panelArray[];
-
-	Panels(Connection conn) {
-		setButtonToPanel(conn);
-	}
-
-	void setButtonToPanel(Connection conn) {
-		Buttons Jbuttons = new Buttons(conn);
-		panelArray = new JPanel[Jbuttons.floorNum];
-		for (int i = 0; i < Jbuttons.floorNum; i++) {
-			panelArray[i] = new JPanel();
-			panelArray[i].setLayout(new GridLayout(10, 1));
-		}
-		for (int j = 0; j < Jbuttons.Categorys.size(); j++) {
-			if (Jbuttons.Categorys.get(j).floor == 1) {
-				panelArray[0].add(Jbuttons.CategoryButtons[j]);
-			} else if (Jbuttons.Categorys.get(j).floor == 2) {
-				panelArray[1].add(Jbuttons.CategoryButtons[j]);
-			} else if (Jbuttons.Categorys.get(j).floor == 3) {
-				panelArray[2].add(Jbuttons.CategoryButtons[j]);
-			}
-
-		}
-	}
-
 }
