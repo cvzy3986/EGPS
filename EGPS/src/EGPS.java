@@ -233,8 +233,8 @@ class GetlogoImage {
 		}
 	}
 }
-
 class DBConnect{
+	
 	static void DBConnectFunc(Connection conn){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
