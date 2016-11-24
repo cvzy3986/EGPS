@@ -24,22 +24,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-class SearchThread extends Thread{
-	JTextField textField;
-	Connection conn;
-	MapImage mapImage;
-	SearchThread(JTextField textField,Connection conn,MapImage mapImage){
-		this.textField= textField;
-		this.conn = conn;
-		this.mapImage = mapImage;
-	}
-	public  void run(){
-		   JFrame frame2 = new SearchFrame(textField,conn,mapImage);
-		   frame2.setBounds(new Rectangle(1000, 500));
-		   frame2.setVisible(true);
-		   frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	   }
-}
 
 class SearchFrame extends JFrame{
    private JPanel contentPane;
@@ -145,19 +129,3 @@ class SearchFrame extends JFrame{
    }
 }
 
-class SearchButtonActionListener implements ActionListener{
-	JTextField textField;
-	Connection conn;
-	MapImage mapImage;
-	SearchButtonActionListener(JTextField textField,Connection conn,MapImage mapImage){
-		this.textField =textField;
-		this.conn  = conn;
-		this.mapImage = mapImage;
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		SearchThread thread = new SearchThread(textField,conn,mapImage);
-		thread.start();
-	}
-}

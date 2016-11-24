@@ -49,8 +49,13 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.event.ActionListener;
 import javax.swing.JTabbedPane;
-
+/**
+ * 
+ * @author user
+ *
+ */
 public class EGPS extends JFrame {
+
 	public static Product PRODUCT= new  Product();
 	public static JTextPane textPname = new JTextPane();
 	public static JTextPane textCost = new JTextPane();
@@ -212,27 +217,7 @@ public class EGPS extends JFrame {
 
 }
 
-class GetlogoImage {
-	ImageIcon logo = null;
-	GetlogoImage(Connection conn) {
-		try {
-			Statement stmt = conn.createStatement(); 
-			ResultSet rset = stmt.executeQuery("Select image from logo where id=1");
-			Image temp = null;
-			while(rset.next()){
-				temp = ImageIO.read(rset.getBlob(1).getBinaryStream());
-			}
-			Image temp2 = temp.getScaledInstance(441, 130, Image.SCALE_SMOOTH);
-			logo = new ImageIcon(temp2);
-			
-		} catch (SQLException se) {
-			// TODO Auto-generated catch block
-			se.printStackTrace();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-}
+
 class DBConnect{
 	
 	static void DBConnectFunc(Connection conn){
