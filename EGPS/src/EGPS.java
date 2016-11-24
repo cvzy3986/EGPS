@@ -195,7 +195,7 @@ public class EGPS extends JFrame {
 			Statement stmt = conn.createStatement(); 
 			ResultSet rset = stmt.executeQuery("Select Mapimage from floor");
 			while(rset.next()){
-				arrFloor.add(ReturnMapImage.returnImage(rset.getBlob(1)));
+				arrFloor.add(returnImage(rset.getBlob(1)));
 			}
 		} catch (SQLException se) {
 			// TODO Auto-generated catch block
@@ -203,6 +203,11 @@ public class EGPS extends JFrame {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+	}
+	public static Image returnImage(Blob data) throws Exception{
+		Image temp = ImageIO.read(data.getBinaryStream());
+		Image temp2 = temp.getScaledInstance(1000, 490, Image.SCALE_SMOOTH);
+		return temp2;
 	}
 
 }
@@ -224,13 +229,6 @@ class SearchButtonActionListener implements ActionListener{
 	}
 }
 
-class ReturnMapImage{
-	static Image returnImage(Blob data) throws Exception{
-		Image temp = ImageIO.read(data.getBinaryStream());
-		Image temp2 = temp.getScaledInstance(1000, 490, Image.SCALE_SMOOTH);
-		return temp2;
-	}
-}
 class GetlogoImage {
 	ImageIcon logo = null;
 	GetlogoImage() {
@@ -245,8 +243,6 @@ class GetlogoImage {
 		}
 	}
 }
-
-
 
 class DBConnect{
 	static void DBConnectFunc(Connection conn){

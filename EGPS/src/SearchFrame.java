@@ -80,6 +80,9 @@ class SearchFrame extends JFrame{
 		table.setBounds(0, 0, 1100, 537);
 		scrollPane.setViewportView(table);
 		
+		
+		setTableProduct(conn,modelout,textField.getText());
+		
 		ListSelectionModel model = table.getSelectionModel();
 		model.addListSelectionListener(new ListSelectionListener() {
 			@Override
@@ -89,7 +92,6 @@ class SearchFrame extends JFrame{
 				 */
 				// TODO Auto-generated method stub
 			    System.out.println(table.getModel().getValueAt(model.getMinSelectionIndex(), 0));
-			   
 			    try {
 					PreparedStatement menuQuery = conn.prepareStatement("Select pname,cost,image,URL,x,y,floor from product where pname = ?");
 					menuQuery.setString(1, table.getModel().getValueAt(model.getMinSelectionIndex(), 0).toString());
@@ -118,9 +120,9 @@ class SearchFrame extends JFrame{
 				}
 			}
 		});
-		
-		String product  = textField.getText();
-		try{
+   }
+   public static void setTableProduct(Connection conn, DefaultTableModel modelout, String product){
+	   try{
 			while(modelout.getRowCount() != 0)
 		    	modelout.removeRow(0);
 			PreparedStatement query = conn.prepareStatement("Select pname,cost from product where pname like ?");

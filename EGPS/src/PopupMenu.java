@@ -14,7 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
 public class PopupMenu extends	JFrame {
-	HashMap<Integer,JPopupMenu> pop;
+	public HashMap<Integer,JPopupMenu> pop;
 	public PopupMenu(Connection conn){
 		setPopMenuToButton(conn);
 	}
@@ -53,7 +53,7 @@ class MenuActionListener implements ActionListener {
 	 * @brief 상품아이템 당 선택 시 발생되는 이벤트클래스
 	 * @details 특정 상품 클릭 시 해당 상품명의 pname(상품명),cost(가격),image(상품이미지),URL(해당 상품 URL),x,y(상품 위치) 정보를 가져온다.
 	 */
-	Connection conn;
+	private Connection conn;
 	MenuActionListener(Connection conn){
 		this.conn = conn;
 	}
