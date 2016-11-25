@@ -14,11 +14,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
 public class PopupMenu extends	JFrame {
-	public HashMap<Integer,JPopupMenu> pop;
+	static public HashMap<Integer,JPopupMenu> pop;
 	public PopupMenu(Connection conn){
 		setPopMenuToButton(conn);
 	}
-	void setPopMenuToButton(Connection conn){
+	static void setPopMenuToButton(Connection conn){
 		pop =new HashMap<>();
 		ArrayList<Integer> cids = new ArrayList<>(10);
 		try {
