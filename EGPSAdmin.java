@@ -139,16 +139,21 @@ public class EGPSAdmin extends JFrame {
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// 추가 눌렸을 때
-				// 추가할 물품의 pid를 구한다. pid = max(pid)+1 from product
-				try {
-						Statement stmt = conn.createStatement();
-						ResultSet rset = stmt.executeQuery("select max(pid)+1 addNum from product");
-						while (rset.next()) 
-							System.out.println("New pid : "+rset.getInt("addNum"));
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
+				Add_Screen addComp = new Add_Screen(conn);
+				addComp.setBounds(new Rectangle(420, 290));			
+				addComp.setVisible(true);
+				
+				
+//				// 추가할 물품의 pid를 구한다. pid = max(pid)+1 from product
+//				try {
+//						Statement stmt = conn.createStatement();
+//						ResultSet rset = stmt.executeQuery("select max(pid)+1 addNum from product");
+//						while (rset.next()) 
+//							System.out.println("New pid : "+rset.getInt("addNum"));
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}	
 			}
 		});
 		addButton.setFont(new Font("굴림", Font.PLAIN, 40));
@@ -202,7 +207,7 @@ public class EGPSAdmin extends JFrame {
 //						JOptionPane.showMessageDialog(null, "로그인 되었습니다.");
 						
 						Category_admin mana = new Category_admin(conn);
-						mana.setBounds(new Rectangle(1068, 950));			
+						mana.setBounds(new Rectangle(400, 300));			
 						mana.setVisible(true);
 					}
 				});
