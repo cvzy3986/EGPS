@@ -4,7 +4,15 @@ import java.sql.Connection;
 
 import javax.swing.JTextField;
 
-class SearchButtonActionListener implements ActionListener{
+/**
+ * @file SearchButtonActionListener.java
+ * @brief 검색버튼 이벤트 클래스
+ * @param textField : 검색어를 저장 할 텍스트필드
+ * @remark 검색어를 저장하여 버튼클릭 시 새 창을 띄우는 함수를 호출하는 클래스이다.
+ */
+
+
+public class SearchButtonActionListener implements ActionListener{
 	JTextField textField;
 	Connection conn;
 	MapImage mapImage;
