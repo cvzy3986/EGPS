@@ -14,7 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.*;
 public class PopupMenu extends	JFrame {
-	static public HashMap<Integer,JPopupMenu> pop;
+	public static HashMap<Integer,JPopupMenu> pop;
 	public PopupMenu(Connection conn){
 		setPopMenuToButton(conn);
 	}
@@ -35,8 +35,10 @@ public class PopupMenu extends	JFrame {
 				rset = query.executeQuery();
 				while(rset.next()){
 					menuItem =new JMenuItem(rset.getString(1));
-					menuItem.addActionListener(new MenuActionListener(conn));
-					
+					if(EGPS.isAdmin == false)
+						menuItem.addActionListener(new MenuActionListener(conn));
+					else
+						menuItem.addActionListener(new MenuActionListenerAdmin(conn));
 					pop.get(cid).add(menuItem);
 				}
 			}

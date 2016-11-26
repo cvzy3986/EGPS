@@ -55,13 +55,12 @@ import javax.swing.JTabbedPane;
  *
  */
 public class EGPS extends JFrame {
-
 	public static Product PRODUCT= new  Product();
 	public static JTextPane textPname = new JTextPane();
 	public static JTextPane textCost = new JTextPane();
 	public static ProductDrawImage panel = new ProductDrawImage();
-	
-	private Connection conn;
+	public static boolean isAdmin;
+	public static Connection conn;
 	/**
 	 * Launch the application.
 	 */
@@ -72,9 +71,8 @@ public class EGPS extends JFrame {
 				 * @brief 메인 프레임 실행 				 
 				 */
 				try {
-					EGPS frame = new EGPS();
+					EGPS frame = new EGPS(true);
 					frame.setBounds(new Rectangle(1468, 950));
-					
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -86,20 +84,22 @@ public class EGPS extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public EGPS() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public EGPS(boolean isDBaccess) {
+		isAdmin = false;
+		if(isDBaccess){
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				conn = DriverManager.getConnection("jdbc:mysql://165.229.89.148/mart?autoReconnect=true", "team8",
+						"password");
+			} catch (SQLException sqex) {
+				System.out.println("SQLException: " + sqex.getMessage());
+			}
 		}
-		try {
-			conn = DriverManager.getConnection("jdbc:mysql://165.229.89.148/mart?autoReconnect=true","team8", "password");
-		} catch (SQLException sqex) {
-			System.out.println("SQLException: " + sqex.getMessage());
-		}
-		
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1468, 950);
 		getContentPane().setLayout(null);
@@ -186,6 +186,10 @@ public class EGPS extends JFrame {
 				resultStr = JOptionPane.showInputDialog("비밀번호 입력하세요.");
 				if(resultStr.equals("123")){
 					System.out.println("관리자 실행");
+					EGPS.isAdmin = true;
+					Thread adminThread = new AdminThread(conn);
+					adminThread.start();
+					dispose();
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "비밀번호 오류", "오류", JOptionPane.ERROR_MESSAGE);

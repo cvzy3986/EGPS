@@ -4,7 +4,7 @@
  * @author user
  *
  */
-class CategoryData{
+public class CategoryData{
 	    int cid;
 		String category;
 	    int floor;
