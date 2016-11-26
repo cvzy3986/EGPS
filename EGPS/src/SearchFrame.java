@@ -25,8 +25,15 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * @file SearchFrame.java
+ * @brief 검색결과 상품정보 출력 클래스
+ * @param model : 검색어로 찾은 결과를 리스트로 저장
+ * @remark 검색 결과를 찾아서 검색 결과 창이 뜨고 그 중 상품을 클릭하면 상품정보 화면에 정보들이 출력된다.
+ */
 
-class SearchFrame extends JFrame{
+
+public class SearchFrame extends JFrame{
    private JPanel contentPane;
    private Connection conn;
    private JTextField textField;
@@ -46,9 +53,9 @@ class SearchFrame extends JFrame{
 	    ArrayList<Image> arrFloor = new ArrayList<>();
 	    EGPS.getFloorImage(arrFloor,conn);
 		
-		String out[] = { "��ǰ��", "����"  };
+		String out[] = { "»óÇ°¸í", "°¡°Ý"  };
 		DefaultTableModel modelout = new DefaultTableModel(out, 10);
-		JLabel lblNewLabel = new JLabel("�˻� ���");
+		JLabel lblNewLabel = new JLabel("°Ë»ö ±â·Ï");
 		lblNewLabel.setBounds(12, 10, 69, 20);
 		contentPane.add(lblNewLabel);
 
