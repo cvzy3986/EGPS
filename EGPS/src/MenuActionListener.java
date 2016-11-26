@@ -25,8 +25,11 @@ class MenuActionListener implements ActionListener {
 					EGPS.PRODUCT.setPname(rset.getString(1));
 					EGPS.PRODUCT.setCost(rset.getInt(2));
 					EGPS.PRODUCT.setPimage(ReturnProductImage.returnImage(rset.getBlob(3)));
+					
 					EGPS.textPname.setText(EGPS.PRODUCT.pname);
-					EGPS.textCost.setText(Integer.toString((EGPS.PRODUCT.cost)));
+//					EGPS.textCost.setText(Integer.toString((EGPS.PRODUCT.cost)));
+					EGPS.textCost.setText(String.format("%,d ¿ø",EGPS.PRODUCT.cost));;
+					
 					EGPS.PRODUCT.setURL(rset.getString(4));
 				    EGPS.PRODUCT.setX(rset.getInt(5));
 				    EGPS.PRODUCT.setY(rset.getInt(6));

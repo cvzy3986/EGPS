@@ -74,9 +74,7 @@ class SearchFrame extends JFrame{
 		model.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				/**
-				 * @
-				 */
+				
 				// TODO Auto-generated method stub
 			    System.out.println(table.getModel().getValueAt(model.getMinSelectionIndex(), 0));
 			    try {
