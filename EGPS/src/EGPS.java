@@ -149,11 +149,13 @@ public class EGPS extends JFrame {
 		infoScreen.setBounds(438, 30, 1000, 276);
 		getContentPane().add(infoScreen);
 		infoScreen.setLayout(null);
+		textPname.setEditable(false);
 		
 		
 		textPname.setFont(new Font("±¼¸²", Font.PLAIN, 28));
 		textPname.setBounds(440, 26, 543, 97);
 		infoScreen.add(textPname);
+		textCost.setEditable(false);
 		
 		
 		textCost.setFont(new Font("±¼¸²", Font.PLAIN, 30));
