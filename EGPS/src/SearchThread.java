@@ -6,7 +6,13 @@ import java.sql.Connection;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-class SearchThread extends Thread{
+/**
+ * @file SearchThread.java
+ * @brief 검색버튼 결과 화면 클래스
+ * @remark 검색어를 찾아서 새 창을 띄우는 클래스이다.
+ */
+
+public class SearchThread extends Thread{
 	JTextField textField;
 	Connection conn;
 	MapImage mapImage;
