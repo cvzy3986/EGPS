@@ -40,6 +40,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import java.sql.Connection;
+import javax.swing.border.TitledBorder;
 
 public class AdminFrame extends JFrame {
 	private JScrollPane scrollPane;
@@ -50,7 +51,6 @@ public class AdminFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public AdminFrame(Connection conn) {
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 954, 645);
 		getContentPane().setLayout(null);
 
@@ -117,30 +117,38 @@ public class AdminFrame extends JFrame {
 			}
 		});
 		addButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		addButton.setBounds(497, 507, 135, 41);
+		addButton.setBounds(628, 525, 135, 41);
 		getContentPane().add(addButton);
 		
+		JPanel panel = new JPanel();
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "\uC635\uC158", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel.setBounds(327, 459, 282, 120);
+		getContentPane().add(panel);
+		panel.setLayout(null);
+		
 		JButton deleteButton = new JButton("\uC0AD\uC81C");
-
-		deleteButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// 삭제 눌렸을 때
-				ProductAdmin obj = null;
-				if(select == 1) // 물품 1개
-					obj = new OnePro_admin();
-				else if(select == 2) // 테이블 전체 물품
-					obj = new Multi_admin();
-				else if(select == 3) //	선택된 물품
-					obj = new Spec_admin();
-				
-				obj.change(table, conn); // delete
-			}
-		});
+		deleteButton.setBounds(135, 65, 135, 41);
+		panel.add(deleteButton);
+		
+				deleteButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						// 삭제 눌렸을 때
+						ProductAdmin obj = null;
+						if(select == 1) // 물품 1개
+							obj = new OnePro_admin();
+						else if(select == 2) // 테이블 전체 물품
+							obj = new Multi_admin();
+						else if(select == 3) //	선택된 물품
+							obj = new Spec_admin();
+						
+						obj.change(table, conn); // delete
+					}
+				});
 		deleteButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		deleteButton.setBounds(791, 507, 135, 41);
-		getContentPane().add(deleteButton);
 
 		JButton modifyButton = new JButton("\uC218\uC815");
+		modifyButton.setBounds(135, 17, 135, 41);
+		panel.add(modifyButton);
 		modifyButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// 수정 눌렸을 때
@@ -157,8 +165,39 @@ public class AdminFrame extends JFrame {
 			}
 		});
 		modifyButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		modifyButton.setBounds(644, 507, 135, 41);
-		getContentPane().add(modifyButton);
+		
+		JRadioButton oneRadio = new JRadioButton("\uC120\uD0DD\uD55C \uBB3C\uD488");
+		oneRadio.setBounds(6, 24, 121, 23);
+		panel.add(oneRadio);
+		buttonGroup.add(oneRadio);
+		oneRadio.setSelected(true);
+		
+		JRadioButton multiRadio = new JRadioButton("\uD14C\uC774\uBE14 \uC804\uCCB4");
+		multiRadio.setBounds(6, 54, 121, 23);
+		panel.add(multiRadio);
+		buttonGroup.add(multiRadio);
+		
+		JRadioButton specRadio = new JRadioButton("\uC120\uD0DD\uB41C \uBB3C\uD488\uB4E4");
+		specRadio.setBounds(6, 84, 121, 23);
+		panel.add(specRadio);
+		buttonGroup.add(specRadio);
+		specRadio.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if(specRadio.isSelected())	select = 3;
+			}
+		});
+		multiRadio.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if(multiRadio.isSelected())	select = 2;
+			
+			}
+		});
+		oneRadio.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				if(oneRadio.isSelected())	select = 1;
+				
+			}
+		});
 		
 		JButton Categoryadd = new JButton("카테고리 추가");
 		Categoryadd.addActionListener(new ActionListener() {
@@ -233,20 +272,12 @@ public class AdminFrame extends JFrame {
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// 갱신 버튼 클릭 시
-				//updateTable(conn);
-				//PopupMenu.setPopMenuToButton(conn);	//팝업 메뉴 갱신
-				int count = table.getSelectedRowCount();
-				System.out.println("선택 수 : "+count);
-				while(count-- != 0)
-				{
-//					int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
-					int index[] = table.getSelectedRows();
-					System.out.println("인덱스 번호 : "+index[(table.getSelectedRowCount()-1)-count]);
-				}
+				updateTable(conn);
+				PopupMenu.setPopMenuToButton(conn);	//팝업 메뉴 갱신
 			}
 		});
 		updateButton.setFont(new Font("굴림", Font.PLAIN, 40));
-		updateButton.setBounds(791, 459, 135, 41);
+		updateButton.setBounds(628, 477, 135, 41);
 		getContentPane().add(updateButton);
 		
 		JButton removeButton = new JButton("\uC9C0\uC6B0\uAE30");
@@ -258,7 +289,7 @@ public class AdminFrame extends JFrame {
 			}
 		});
 		removeButton.setFont(new Font("굴림", Font.PLAIN, 33));
-		removeButton.setBounds(497, 459, 135, 41);
+		removeButton.setBounds(791, 477, 135, 41);
 		getContentPane().add(removeButton);
 		JButton cleanButton = new JButton("\uBE44\uC6B0\uAE30");
 		cleanButton.addActionListener(new ActionListener() {
@@ -269,42 +300,13 @@ public class AdminFrame extends JFrame {
 			}
 		});
 		cleanButton.setFont(new Font("굴림", Font.PLAIN, 33));
-		cleanButton.setBounds(644, 459, 135, 41);
-		
+		cleanButton.setBounds(791, 525, 135, 41);
 		getContentPane().add(cleanButton);
 		
-		JRadioButton oneRadio = new JRadioButton("\uC120\uD0DD\uD55C \uBB3C\uD488");
-		buttonGroup.add(oneRadio);
-		oneRadio.setBounds(339, 466, 121, 23);
-		getContentPane().add(oneRadio);
-		oneRadio.setSelected(true);
-		oneRadio.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				if(oneRadio.isSelected())	select = 1;
-				
-			}
-		});
-			
-		JRadioButton multiRadio = new JRadioButton("\uD14C\uC774\uBE14 \uC804\uCCB4");
-		buttonGroup.add(multiRadio);
-		multiRadio.setBounds(339, 496, 121, 23);
-		getContentPane().add(multiRadio);
-		multiRadio.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				if(multiRadio.isSelected())	select = 2;
-			
-			}
-		});
-		
-		JRadioButton specRadio = new JRadioButton("\uC120\uD0DD\uB41C \uBB3C\uD488\uB4E4");
-		buttonGroup.add(specRadio);
-		specRadio.setBounds(339, 526, 121, 23);
-		getContentPane().add(specRadio);
-		specRadio.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				if(specRadio.isSelected())	select = 3;
-			}
-		});
+		JButton xyButton = new JButton("\uC9C0\uB3C4 \uC88C\uD45C\uD655\uC778");
+		xyButton.setFont(new Font("굴림", Font.PLAIN, 30));
+		xyButton.setBounds(12, 537, 293, 42);
+		getContentPane().add(xyButton);
 
 	}
 	
