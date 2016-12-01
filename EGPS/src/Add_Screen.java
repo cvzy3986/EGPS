@@ -83,7 +83,6 @@ public class Add_Screen extends JFrame {
 				
 				while (rset.next()) 
 					pidField.setText(rset.getString("addNum"));
-//					System.out.println("New pid : "+rset.getInt("addNum"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
