@@ -5,8 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-
+import java.util.Vector;
 
 class MenuActionListenerAdmin implements  ActionListener{
 	Connection conn;
@@ -21,7 +20,7 @@ class MenuActionListenerAdmin implements  ActionListener{
          String pstr = e.getActionCommand(), pname = null;
          //table 행 개수에 맞춰 비교 연산 수행, 테이블에 이미 있는 물품이면 추가x
          while (i-- != 0) {
-//            pname = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(i)).elementAt(1);
+            pname = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(i)).elementAt(1);
             if (pstr.equals(pname))   return;   //중복이면 비교 종료
          }
          
