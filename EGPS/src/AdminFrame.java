@@ -232,16 +232,8 @@ public class AdminFrame extends JFrame {
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// 갱신 버튼 클릭 시
-				//updateTable(conn);
-				//PopupMenu.setPopMenuToButton(conn);	//팝업 메뉴 갱신
-				int count = table.getSelectedRowCount();
-				System.out.println("선택 수 : "+count);
-				while(count-- != 0)
-				{
-//					int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
-					int index[] = table.getSelectedRows();
-					System.out.println("인덱스 번호 : "+index[(table.getSelectedRowCount()-1)-count]);
-				}
+				updateTable(conn);
+				PopupMenu.setPopMenuToButton(conn);	//팝업 메뉴 갱신
 			}
 		});
 		updateButton.setFont(new Font("굴림", Font.PLAIN, 40));
