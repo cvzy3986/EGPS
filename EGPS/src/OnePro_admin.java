@@ -13,10 +13,18 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Vector;
 
-
+/**
+ * 
+ * @author ParkJiyong
+ * @brief 상품 추가 또는 리스트에서 선택한 상품을  수정, 삭제 클래스
+ * @details 관리자 화면에서 새로운 상품을 추가로 등록 또는 리스트에서 선택한 상품의 정보 수정, 상품 삭제 시에 사용되는 클래스
+ * @param table : 선택한 상품 리스트가 저장되어 있는 테이블
+ * @param conn : DB와 연결해주는 커넥션
+ * @param sel : 수정과 삭제를 구분해주기 위한 boolean 타입 변수
+ */
 // 선택한 물품 관리
  interface ProductAdmin {
-	public void change(Connection conn); // add
+	 public int change(Connection conn); // add
 
 	public void change(JTable table, Connection conn, Boolean sel); // modify
 
@@ -29,7 +37,7 @@ public class OnePro_admin implements ProductAdmin {
 		this.form = form;
 	
 	}
-	public void change(Connection conn) {
+	public int change(Connection conn) {
 		PreparedStatement menuQuery;
 		
 		try {
@@ -50,16 +58,18 @@ public class OnePro_admin implements ProductAdmin {
 			System.out.println(menuQuery);
 			menuQuery.executeUpdate();
 			PopupMenu.setPopMenuToButton(conn); // 팝업 메뉴 갱신
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "추가되었습니다.");
+			return 0;
+		}catch (SQLException sqle){
+			JOptionPane.showMessageDialog(null, "SQL 에러");
+		}catch (FileNotFoundException imgaee){
+			JOptionPane.showMessageDialog(null, "파일이 존재하지 않습니다.");
+		}catch (NullPointerException nulle){
+			JOptionPane.showMessageDialog(null, "이미지가 존재하지 않습니다.");
+		}catch (NumberFormatException notInte){
+			JOptionPane.showMessageDialog(null, "가격, x,y좌표는 숫자만 입력 가능합니다.");
 		}
-
-	
+		return -1;
 	}
 
 	// modify
@@ -104,7 +114,7 @@ public class OnePro_admin implements ProductAdmin {
 		;
 	}
 
-	// delete
+	//삭제
 	public void change(JTable table, Connection conn) {
 		int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
 
