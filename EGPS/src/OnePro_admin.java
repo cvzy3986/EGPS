@@ -73,8 +73,7 @@ public class OnePro_admin implements ProductAdmin {
 	}
 
 	// modify
-	public void change(JTable table, Connection conn, Boolean sel) // sel = 기능
-																	// 구분용)
+	public void change(JTable table, Connection conn, Boolean sel) // sel = 기능구분용)
 	{
 		int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
 

@@ -50,6 +50,7 @@ public class Add_Screen extends JFrame {
 	private JButton addButton;
 	private JButton cancleButton;
 	static String filePath;
+	
 	public Add_Screen(Connection conn) {
 		addComponets(conn);
 	}
@@ -69,8 +70,11 @@ public class Add_Screen extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		 this.setResizable(false); // 창의 확장을 막는 메서드
 		
 		ArrayList<JTextField> fields = new ArrayList<>();
+		ArrayList<JComboBox> combos = new ArrayList<>();
+		
 		pidField = new JTextField();
 		pidField.setEditable(false);
 		pidField.setBounds(55, 10, 90, 21);
@@ -146,17 +150,47 @@ public class Add_Screen extends JFrame {
 			e.printStackTrace();
 		}
 		
+		JComboBox cnameBox = new JComboBox();
+		cnameBox.setBounds(226, 72, 163, 21);
+		contentPane.add(cnameBox);
+		// cname를 받아와 콤보박스에 추가
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rset = stmt.executeQuery("Select cname from category");
+			while (rset.next()) {
+				cnameBox.addItem(rset.getString(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		JComboBox floorBox = new JComboBox();
+		floorBox.setBounds(55, 41, 90, 21);
+		contentPane.add(floorBox);
+		// floor를 받아와 콤보박스에 추가
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rset = stmt.executeQuery("Select distinct(floor) from category");
+			while (rset.next()) {
+				floorBox.addItem(rset.getInt(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		JButton fileButton = new JButton("\uD30C\uC77C \uC120\uD0DD");
-		fileButton.addActionListener(new FilebuttonActionListener(imageField));
+		fileButton.addActionListener(new UploadActionListener(imageField));
 		fileButton.setBounds(292, 103, 97, 23);
 		contentPane.add(fileButton);
 		
-		
-		fields.add(pidField);fields.add(pnameField);fields.add(floorField);
-		fields.add(costField);fields.add(cateField);fields.add(xField);
-		fields.add(yField);fields.add(URLField);
-		
+		//arraylist에 추가
+		fields.add(pidField); fields.add(pnameField); fields.add(costField);
+		fields.add(xField); fields.add(yField); fields.add(URLField);
+		fields.add(imageField);
+
+		combos.add(cidBox); combos.add(cnameBox); combos.add(floorBox);
 
 		JLabel lblPid = new JLabel("pid");
 		lblPid.setBounds(12, 13, 57, 15);
@@ -197,9 +231,9 @@ public class Add_Screen extends JFrame {
 		lblUrl = new JLabel("URL");
 		lblUrl.setBounds(12, 167, 57, 15);
 		contentPane.add(lblUrl);
-//--------------------------------------------------------------------------
+
 		addButton = new JButton("\uCD94\uAC00");
-		addButton.addActionListener(new addActionListener(fields,cidBox,conn));
+		addButton.addActionListener(new addProActionListener(fields, combos, conn));
 			
 		addButton.setBounds(81, 201, 97, 34);
 		contentPane.add(addButton);
@@ -208,64 +242,10 @@ public class Add_Screen extends JFrame {
 		cancleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//취소 버튼 클릭
-				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				dispose();
 			}
 		});
 		cancleButton.setBounds(214, 201, 97, 34);
 		contentPane.add(cancleButton);
-	}
-}
-class FilebuttonActionListener implements ActionListener{
-	JTextField imageField;
-	FilebuttonActionListener(JTextField imageField){
-		this.imageField = imageField;
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		JFileChooser fc = new JFileChooser(); // 파일 선택기를 사용
-		if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-			Add_Screen.filePath = fc.getSelectedFile().getPath(); 
-			imageField.setText(fc.getSelectedFile().getName());
-			
-		}
-		else {
-			// JOptionPane.showMessageDialog(null, "파일을 선택하세요.", "오류", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-	}
-	
-}
-class addActionListener implements ActionListener{
-	ArrayList<JTextField> fields;
-	JComboBox cidBox;
-	Connection conn;
-	addActionListener(ArrayList<JTextField> fields,JComboBox cidBox,Connection conn){
-		this.fields = fields;
-		this.cidBox = cidBox;
-		this.conn = conn;
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		ProAdmin_form product = new ProAdmin_form();
-		System.out.println(fields.get(1).getText());
-		product.setPid(fields.get(0).getText());
-		product.setPname(fields.get(1).getText());
-		product.setFloor(fields.get(2).getText());
-		product.setCost(fields.get(3).getText());
-		product.setCategory(fields.get(4).getText());
-		product.setX(fields.get(5).getText());
-		product.setY(fields.get(6).getText());
-		product.setURL(fields.get(7).getText());
-		
-		product.setCid(cidBox.getSelectedItem().toString());
-		
-		File file = new File(Add_Screen.filePath);
-		product.setImage(file);
-		
-		OnePro_admin obj = new OnePro_admin();
-		obj.setProductForm(product);
-		obj.change(conn);
 	}
 }
