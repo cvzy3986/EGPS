@@ -29,6 +29,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
@@ -52,6 +54,8 @@ public class AdminFrame extends JFrame {
 		setBounds(100, 100, 954, 645);
 		getContentPane().setLayout(null);
 
+		IsAdminActive adminActive = new IsAdminActive();
+		
 		JButton searchButton = new JButton("°Ë »ö");
 		searchButton.setBounds(188, 417, 117, 50);
 		searchButton.setFont(new Font("±¼¸²", Font.BOLD, 27));
@@ -104,8 +108,11 @@ public class AdminFrame extends JFrame {
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//  ´­·ÈÀ» ¶§
-				Thread addScreen =  new AddScreenThread(conn);
-				addScreen.start();
+				if(!adminActive.isAdd){
+					adminActive.isAdd = true;
+					Thread addScreen = new AddScreenThread(conn,adminActive);
+					addScreen.start();
+				}
 				
 			}
 		});
@@ -155,15 +162,22 @@ public class AdminFrame extends JFrame {
 		
 		JButton Categoryadd = new JButton("Ä«Å×°í¸® Ãß°¡");
 		Categoryadd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-						
-						Category_admin mana = new Category_admin(conn);
-						mana.setBounds(new Rectangle(400, 300));			
-						mana.setVisible(true);
-						mana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					}
-				});
-	
+			public void actionPerformed(ActionEvent e) {
+				if (!adminActive.isCate) {
+					adminActive.isCate=true;
+					Category_admin mana = new Category_admin(conn);
+					mana.setBounds(new Rectangle(400, 300));
+					mana.setVisible(true);
+					mana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					mana.addWindowListener(new WindowAdapter() {
+						public void windowClosing(WindowEvent e){
+								adminActive.isCate=false;
+						   }
+					});
+				}
+			}
+		});
+
 		Categoryadd.setFont(new Font("±¼¸²", Font.PLAIN, 30));
 		Categoryadd.setBounds(12, 477, 293, 50);
 		getContentPane().add(Categoryadd);
@@ -333,5 +347,13 @@ public class AdminFrame extends JFrame {
 					e1.printStackTrace();
 				}
 			}
+	}
+}
+class IsAdminActive{
+	public boolean isAdd;
+	public boolean isCate;
+	IsAdminActive(){
+		isAdd=false;
+		isCate=false;
 	}
 }

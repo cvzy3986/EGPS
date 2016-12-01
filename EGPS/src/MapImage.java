@@ -16,7 +16,6 @@ class MapImage extends JPanel{
 		if(EGPS.PRODUCT.x != -1 && EGPS.PRODUCT.y != -1){
 			g.setColor(Color.RED);
 			g.fillOval(EGPS.PRODUCT.x, EGPS.PRODUCT.y, 50, 50);
-			
 		}
 	}
 }

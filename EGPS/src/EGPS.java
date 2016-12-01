@@ -55,7 +55,8 @@ import javax.swing.JTabbedPane;
  *
  */
 public class EGPS extends JFrame {
-	public static Product PRODUCT= new  Product();
+	
+	public static Product PRODUCT= new  Product(); 
 	public static JTextPane textPname = new JTextPane();
 	public static JTextPane textCost = new JTextPane();
 	public static ProductDrawImage panel = new ProductDrawImage();
@@ -86,6 +87,10 @@ public class EGPS extends JFrame {
 	 */
 	public EGPS(boolean isDBaccess) {
 		isAdmin = false;
+		IsSearchActive SearchActive = new IsSearchActive();
+		IsAdminActive adminActive = new IsAdminActive();
+		SearchActive.isActive = false;
+		
 		if(isDBaccess){
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -127,7 +132,7 @@ public class EGPS extends JFrame {
 		searchButton.setForeground(UIManager.getColor("Desktop.background"));
 		searchButton.setBounds(296, 753, 114, 50);
 		getContentPane().add(searchButton);
-		searchButton.addActionListener(new SearchButtonActionListener(textField,conn,mapImage));
+		searchButton.addActionListener(new SearchButtonActionListener(textField,conn,mapImage,SearchActive));
 		
 				
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);  //tabbedPane이 바뀔 때마다 지도 바뀜
@@ -186,21 +191,25 @@ public class EGPS extends JFrame {
 				// TODO Auto-generated method stub
 				String resultStr = null;
 				resultStr = JOptionPane.showInputDialog("비밀번호 입력하세요.");
-				if(resultStr.equals("123")){
-					System.out.println("관리자 실행");
+				if (resultStr.equals("123")) {
 					EGPS.isAdmin = true;
 					Thread adminThread = new AdminThread(conn);
 					adminThread.start();
 					dispose();
-				}
-				else{
+				} else {
 					JOptionPane.showMessageDialog(null, "비밀번호 오류", "오류", JOptionPane.ERROR_MESSAGE);
-					
+
 				}
+				
 			}
 		});
 		
 	}
+	/**
+	 * 
+	 * @param arrFloor
+	 * @param conn
+	 */
 	public static void getFloorImage(ArrayList<Image> arrFloor,Connection conn){
 		try {
 			Statement stmt = conn.createStatement(); 
@@ -240,4 +249,7 @@ class DBConnect{
 			System.out.println("SQLException: " + sqex.getMessage());
 		}
 	}
+}
+class IsSearchActive{
+	public boolean isActive;
 }

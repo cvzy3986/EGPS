@@ -24,6 +24,8 @@ public class TabChangeListener implements ChangeListener {
         int index = sourceTabbedPane.getSelectedIndex();
   
         mapImage.setImage(arrFloor.get(index));
+        EGPS.PRODUCT.x = -1;
+        EGPS.PRODUCT.y = -2;
         mapImage.repaint();
     }
 }
