@@ -29,6 +29,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JScrollPane;
@@ -160,15 +162,22 @@ public class AdminFrame extends JFrame {
 		
 		JButton Categoryadd = new JButton("카테고리 추가");
 		Categoryadd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-						
-						Category_admin mana = new Category_admin(conn);
-						mana.setBounds(new Rectangle(400, 300));			
-						mana.setVisible(true);
-						mana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					}
-				});
-	
+			public void actionPerformed(ActionEvent e) {
+				if (!adminActive.isCate) {
+					adminActive.isCate=true;
+					Category_admin mana = new Category_admin(conn);
+					mana.setBounds(new Rectangle(400, 300));
+					mana.setVisible(true);
+					mana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					mana.addWindowListener(new WindowAdapter() {
+						public void windowClosing(WindowEvent e){
+								adminActive.isCate=false;
+						   }
+					});
+				}
+			}
+		});
+
 		Categoryadd.setFont(new Font("굴림", Font.PLAIN, 30));
 		Categoryadd.setBounds(12, 477, 293, 50);
 		getContentPane().add(Categoryadd);
