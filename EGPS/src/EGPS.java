@@ -191,8 +191,6 @@ public class EGPS extends JFrame {
 				// TODO Auto-generated method stub
 				String resultStr = null;
 				resultStr = JOptionPane.showInputDialog("비밀번호 입력하세요.");
-				
-				adminActive.isActive = true;
 				if (resultStr.equals("123")) {
 					EGPS.isAdmin = true;
 					Thread adminThread = new AdminThread(conn);
@@ -253,8 +251,5 @@ class DBConnect{
 	}
 }
 class IsSearchActive{
-	public boolean isActive;
-}
-class IsAdminActive{
 	public boolean isActive;
 }

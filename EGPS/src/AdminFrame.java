@@ -52,6 +52,8 @@ public class AdminFrame extends JFrame {
 		setBounds(100, 100, 954, 645);
 		getContentPane().setLayout(null);
 
+		IsAdminActive adminActive = new IsAdminActive();
+		
 		JButton searchButton = new JButton("°Ë »ö");
 		searchButton.setBounds(188, 417, 117, 50);
 		searchButton.setFont(new Font("±¼¸²", Font.BOLD, 27));
@@ -104,8 +106,11 @@ public class AdminFrame extends JFrame {
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//  ´­·ÈÀ» ¶§
-				Thread addScreen =  new AddScreenThread(conn);
-				addScreen.start();
+				if(!adminActive.isAdd){
+					adminActive.isAdd = true;
+					Thread addScreen = new AddScreenThread(conn,adminActive);
+					addScreen.start();
+				}
 				
 			}
 		});
@@ -333,5 +338,13 @@ public class AdminFrame extends JFrame {
 					e1.printStackTrace();
 				}
 			}
+	}
+}
+class IsAdminActive{
+	public boolean isAdd;
+	public boolean isCate;
+	IsAdminActive(){
+		isAdd=false;
+		isCate=false;
 	}
 }
