@@ -139,7 +139,7 @@ public class Category_admin extends javax.swing.JFrame {
 			}
 		});
 
-        pack();
+      
     }                   
 
    
