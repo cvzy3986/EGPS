@@ -5,13 +5,17 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -99,6 +103,44 @@ public class EGPS extends JFrame {
 		textField.setBounds(21, 753, 246, 50);
 		getContentPane().add(textField);
 		textField.setColumns(10);
+		// 엔터로 검색
+		textField.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					// TODO Auto-generated method stub
+					String product = textField.getText();
+					try {
+						while (AdminFrame.modelout.getRowCount() != 0)
+						{
+							String pid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(0)).elementAt(0);
+							
+							AdminFrame.modelout.removeRow(0);
+						}
+						PreparedStatement query = conn.prepareStatement(
+								"Select pid,pname,cost,floor,category,cid,x,y,url from product where pname like ?");
+						query.setString(1, "%" + product + "%");
+						System.out.println(query);
+						ResultSet rset = query.executeQuery();
+						ArrayList<String> row = new ArrayList<>();
+						while (rset.next()) {
+							row.add(rset.getString(1)); // pid
+							row.add(rset.getString(2)); // pname
+							row.add(rset.getString(3)); // cost
+							row.add(rset.getString(4)); // floor
+							row.add(rset.getString(5)); // category
+							row.add(rset.getString(6)); // cid
+							row.add(rset.getString(7)); // x
+							row.add(rset.getString(8)); // y
+							row.add(rset.getString(9)); // URL
+							AdminFrame.modelout.addRow(row.toArray());
+							row.clear();
+						}
+					} catch (SQLException sqle) {
+						System.out.println("SQLException : " + sqle);
+					}
+				}
+			}
+		});
 
 		JButton searchButton = new JButton("검 색");
 		searchButton.setFont(new Font("굴림", Font.BOLD, 27));
