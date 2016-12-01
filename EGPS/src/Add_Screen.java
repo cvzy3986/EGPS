@@ -35,9 +35,7 @@ public class Add_Screen extends JFrame {
 	private JPanel contentPane;
 	private JTextField pidField;
 	private JTextField pnameField;
-	private JTextField floorField;
 	private JTextField costField;
-	private JTextField cateField;
 	private JTextField xField;
 	private JTextField yField;
 	private JTextField URLField;
@@ -98,20 +96,10 @@ public class Add_Screen extends JFrame {
 		contentPane.add(pnameField);
 		pnameField.setColumns(10);
 
-		floorField = new JTextField();
-		floorField.setBounds(55, 41, 90, 21);
-		contentPane.add(floorField);
-		floorField.setColumns(10);
-
 		costField = new JTextField();
 		costField.setBounds(226, 41, 163, 21);
 		contentPane.add(costField);
 		costField.setColumns(10);
-
-		cateField = new JTextField();
-		cateField.setBounds(226, 72, 163, 21);
-		contentPane.add(cateField);
-		cateField.setColumns(10);
 		
 		imageField = new JTextField();
 		imageField.setEditable(false);
