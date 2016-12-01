@@ -20,6 +20,7 @@ public class AdminThread extends Thread{
 				    EGPS frame = new EGPS(false);
 					frame.setBounds(new Rectangle(1468, 950));
 					frame.setVisible(true);
+					
 			   }
 		});
 	}
