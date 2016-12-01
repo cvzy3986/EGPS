@@ -45,14 +45,14 @@ public class OnePro_admin implements ProductAdmin {
 					"INSERT INTO product(pid, pname, cost, floor, category, cid, image, x, y, URL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			menuQuery.setString(1, form.getPid());
 			menuQuery.setString(2, form.getPname());
-			menuQuery.setString(3, form.getCost());
-			menuQuery.setString(4, form.getFloor());
+			menuQuery.setInt(3, Integer.parseInt(form.getCost()));
+			menuQuery.setInt(4, Integer.parseInt(form.getFloor()));
 			menuQuery.setString(5, form.getCategory());
-			menuQuery.setString(6, form.getCid());
+			menuQuery.setInt(6, Integer.parseInt(form.getCid()));
 			FileInputStream fin = new FileInputStream(form.getImage());
 			menuQuery.setBinaryStream(7,fin,form.getImage().length());
-			menuQuery.setString(8, form.getX());
-			menuQuery.setString(9, form.getY());
+			menuQuery.setInt(8, Integer.parseInt(form.getX()));
+			menuQuery.setInt(9, Integer.parseInt(form.getY()));
 			menuQuery.setString(10,form.getURL());
 
 			System.out.println(menuQuery);
