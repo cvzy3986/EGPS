@@ -9,9 +9,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import java.awt.Font;
 
 
 //@TODO Ä«Å×°í¸® Ãß°¡, »èÁ¦
@@ -40,59 +43,94 @@ public class Category_admin extends javax.swing.JFrame {
 		}
 
     	CateAdmin_form cate = new CateAdmin_form();
+    	contentPane = new JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel1.setFont(new Font("±¼¸²", Font.BOLD, 40));
         jLabel2 = new javax.swing.JLabel();
+        jLabel2.setFont(new Font("±¼¸²", Font.BOLD, 40));
         jLabel3 = new javax.swing.JLabel();
+        jLabel3.setFont(new Font("±¼¸²", Font.BOLD, 40));
         Catedel = new javax.swing.JLabel();
+        Catedel.setFont(new Font("±¼¸²", Font.BOLD, 40));
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
+        jTextField3.setFont(new Font("±¼¸²", Font.PLAIN, 25));
         CatedelText = new javax.swing.JTextField();
+        CatedelText.setFont(new Font("±¼¸²", Font.PLAIN, 25));
         jButton1 = new javax.swing.JButton();
+        jButton1.setFont(new Font("±¼¸²", Font.BOLD, 45));
         Del = new javax.swing.JButton();
+        Del.setFont(new Font("±¼¸²", Font.BOLD, 45));
+        setContentPane(contentPane);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(400, 380));
+        setMinimumSize(new java.awt.Dimension(800, 950));
         getContentPane().setLayout(null);
 
         jLabel1.setText("Floor");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 90, 110, 15);
+        jLabel1.setBounds(12, 371, 342, 79);
 
         jLabel2.setText("Category ID");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(20, 30, 110, 15);
+        jLabel2.setBounds(12, 79, 352, 62);
 
         jLabel3.setText("Category name");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 60, 110, 15);
-
-        jTextField1.setText("Floor");
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(130, 90, 190, 21);
-        
-        
-        jTextField2.setText("Cid");      
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(130, 30, 190, 21);
+        jLabel3.setBounds(12, 192, 352, 140);
         
         
         jTextField3.setText("Cname");
         getContentPane().add(jTextField3);
-        jTextField3.setBounds(130, 60, 190, 21);
+        jTextField3.setBounds(479, 671, 242, 73);
         
 
+        JComboBox cidBox = new JComboBox();
+        cidBox.setFont(new Font("±¼¸²", Font.PLAIN, 45));
+		cidBox.setBounds(479, 93, 242, 79);
+		contentPane.add(cidBox);
+		//	cid¸¦ ¹Þ¾Æ¿Í ÄÞº¸¹Ú½º¿¡ Ãß°¡
+		
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rset = stmt.executeQuery("Select cid from category");
+			while (rset.next()) {
+				cidBox.addItem(rset.getInt(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JComboBox floorbox = new JComboBox();
+		floorbox.setFont(new Font("±¼¸²", Font.PLAIN, 45));
+		floorbox.setBounds(479, 410, 242, 73);
+		contentPane.add(floorbox);
+		//	cid¸¦ ¹Þ¾Æ¿Í ÄÞº¸¹Ú½º¿¡ Ãß°¡
+		
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rset = stmt.executeQuery("Select distinct floor from category");
+			while (rset.next()) {
+				floorbox.addItem(rset.getInt(1));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         jButton1.setText("Ãß °¡");       
         getContentPane().add(jButton1);
-        jButton1.setBounds(240, 140, 100, 23);
+        jButton1.setBounds(547, 529, 174, 73);
         jButton1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PreparedStatement query;
 				try {
-			        cate.setFloor(jTextField1.getText());
-			        cate.setCid(jTextField2.getText());
+			        cate.setFloor(floorbox.getSelectedItem().toString());
+			        cate.setCid(cidBox.getSelectedItem().toString());
 			        cate.setCname(jTextField3.getText());
+			       
 		
 					query = conn.prepareStatement("INSERT INTO category(cid, cname, floor) VALUES (?, ?, ?)");
 					query.setInt(1, Integer.parseInt(cate.getCid()));
@@ -112,17 +150,17 @@ public class Category_admin extends javax.swing.JFrame {
         
         Catedel.setText("Category name");
         getContentPane().add(Catedel);
-        Catedel.setBounds(20, 200, 110, 15);
+        Catedel.setBounds(12, 650, 352, 109);
         
         
         CatedelText.setText("Cname");
         getContentPane().add(CatedelText);
-        CatedelText.setBounds(130, 200, 190, 21);
+        CatedelText.setBounds(479, 245, 246, 90);
         
         
         Del.setText("»è Á¦");       
         getContentPane().add(Del);
-        Del.setBounds(240, 250, 100, 23);
+        Del.setBounds(547, 789, 174, 63);
         Del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PreparedStatement query;
@@ -139,49 +177,12 @@ public class Category_admin extends javax.swing.JFrame {
 			}
 		});
 
-      
+        pack();
     }                   
 
    
-//    public static void main(String args[]) {
-//       
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//            //@exception ¿¹¿ÜÃ³¸®
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Category_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Category_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Category_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Category_admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//            	Connection conn;
-//				try {
-//					conn = DriverManager.getConnection("jdbc:mysql://165.229.89.148/mart?autoReconnect=true","team8", "password");
-//					new Category_admin(conn).setVisible(true);
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//                
-//            }
-//        });
-//    }
-
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify       
+	private JPanel contentPane;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton Del;
     private javax.swing.JLabel jLabel1;
