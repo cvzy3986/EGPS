@@ -73,7 +73,7 @@ public class AdminFrame extends JFrame {
 			tabbedPane.add(floorstr, screen.panels.panelArray[i]);
 		}
 		getContentPane().add(tabbedPane);
-
+///////////////////////////////////////////////////////////////////////////////////////
 		scrollPane = new JScrollPane();
 
 		scrollPane.setBounds(317, 10, 609, 439);
@@ -199,12 +199,12 @@ public class AdminFrame extends JFrame {
 			}
 		});
 		
-		JButton Categoryadd = new JButton("카테고리 추가");
+		JButton Categoryadd = new JButton("카테고리 수정");
 		Categoryadd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!adminActive.isCate) {
 					adminActive.isCate=true;
-					Category_admin mana = new Category_admin(conn);
+					Category_admin mana = new Category_admin(conn,tabbedPane);
 					mana.setBounds(new Rectangle(400, 300));
 					mana.setVisible(true);
 					mana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -334,7 +334,16 @@ public class AdminFrame extends JFrame {
 			}
 		});
 	}
-	
+	public static void refreshCate(Connection conn,JTabbedPane tabbedPane){
+		
+		tabbedPane.removeAll();
+		Category_Screen screen = new Category_Screen(conn);
+		for (int i = 0; i < screen.panels.panelArray.length; i++) {
+			int floor = i + 1;
+			String floorstr = floor + "층";
+			tabbedPane.add(floorstr, screen.panels.panelArray[i]);
+		}
+	}
 	public static void updateTable(Connection conn)
 	{
 			// table에서 한줄씩 비우고 pid를 큐에 저장 

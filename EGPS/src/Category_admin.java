@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.awt.Font;
@@ -26,9 +27,10 @@ public class Category_admin extends javax.swing.JFrame {
 
 
     
-    public Category_admin(Connection conn) {
+    public Category_admin(Connection conn,JTabbedPane tabbedPane) {
 		// TODO Auto-generated constructor stub
     	initComponents(conn);
+    	this.tabbedPane= tabbedPane;
 	}
 
 
@@ -166,9 +168,10 @@ public class Category_admin extends javax.swing.JFrame {
 				PreparedStatement query;
 				try {
 					query = conn.prepareStatement("Delete From category Where cname = ?");
-					query.setString(1, CatedelText.getText());
+					query.setString(1, jTextField3.getText());
 					query.executeUpdate();
 					JOptionPane.showMessageDialog(null, "삭제 되었습니다.");
+					AdminFrame.refreshCate(conn,tabbedPane);
 
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -193,6 +196,7 @@ public class Category_admin extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField CatedelText;
+    JTabbedPane tabbedPane;
     // End of variables declaration                   
 }
 
