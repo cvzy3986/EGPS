@@ -307,6 +307,16 @@ public class AdminFrame extends JFrame {
 		xyButton.setFont(new Font("±¼¸²", Font.PLAIN, 30));
 		xyButton.setBounds(12, 537, 293, 42);
 		getContentPane().add(xyButton);
+		xyButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Check frame = new Check();
+				frame.setVisible(true);
+				frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			}
+		} );
 
 	}
 	
