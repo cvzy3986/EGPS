@@ -40,6 +40,18 @@ public class OnePro_admin implements ProductAdmin {
 	public int change(Connection conn) {
 		PreparedStatement menuQuery;
 		
+		//입력되지 않은 필드가 존재할때
+		if(form.getPname().length() == 0 || form.getCost().length() == 0 || form.getURL().length() == 0)
+		{
+			try{
+				Exception blanke = new Exception();
+				throw blanke;	 // 예외를 발생시킴}
+			} catch(Exception blanke){
+				JOptionPane.showMessageDialog(null, "입력되지 않은 값이 존재합니다.");
+				return -1;
+			}
+		}
+		
 		try {
 			menuQuery = conn.prepareStatement(
 					"INSERT INTO product(pid, pname, cost, floor, category, cid, image, x, y, URL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -55,11 +67,11 @@ public class OnePro_admin implements ProductAdmin {
 			menuQuery.setInt(9, Integer.parseInt(form.getY()));
 			menuQuery.setString(10,form.getURL());
 
-			System.out.println(menuQuery);
 			menuQuery.executeUpdate();
 			PopupMenu.setPopMenuToButton(conn); // 팝업 메뉴 갱신
 			JOptionPane.showMessageDialog(null, "추가되었습니다.");
-			return 0;
+			
+			return 0; //정상 처리 시 여기서 0을 리턴하고 종료
 		}catch (SQLException sqle){
 			JOptionPane.showMessageDialog(null, "SQL 에러");
 		}catch (FileNotFoundException imgaee){
@@ -69,7 +81,7 @@ public class OnePro_admin implements ProductAdmin {
 		}catch (NumberFormatException notInte){
 			JOptionPane.showMessageDialog(null, "가격, x,y좌표는 숫자만 입력 가능합니다.");
 		}
-		return -1;
+		return -1; // 예외처리 발생 시만 실행
 	}
 
 	// modify

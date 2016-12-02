@@ -61,15 +61,11 @@ public class addProActionListener implements ActionListener {
 
 		// pid 유지를 위한 처리
 		if (obj.change(conn) == 0)
+		{
 			fields.get(0).setText(Integer.toString(Integer.parseInt(product.getPid()) + 1));
-		else
-			fields.get(0).setText(Integer.toString(Integer.parseInt(product.getPid())));
-
-		fields.get(1).setText(null);
-		fields.get(2).setText(null);
-		fields.get(3).setText(null);
-		fields.get(4).setText(null);
-		fields.get(5).setText(null);
-		fields.get(6).setText(null);
+			fields.get(1).setText(null); fields.get(2).setText(null);
+			fields.get(3).setText(null); fields.get(4).setText(null);
+			fields.get(5).setText(null); fields.get(6).setText(null);
+		}
 	}
 }
