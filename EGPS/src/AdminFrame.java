@@ -312,9 +312,8 @@ public class AdminFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Check frame = new Check();
-				frame.setVisible(true);
-				frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+				Thread thread  = new CheckThread();
+				thread.start();
 			}
 		} );
 
