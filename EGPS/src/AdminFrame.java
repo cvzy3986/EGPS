@@ -51,7 +51,7 @@ public class AdminFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public AdminFrame(Connection conn) {
-		setBounds(100, 100, 954, 645);
+		setBounds(100, 100, 954, 743);
 		getContentPane().setLayout(null);
 
 		IsAdminActive adminActive = new IsAdminActive();
@@ -307,6 +307,7 @@ public class AdminFrame extends JFrame {
 		xyButton.setFont(new Font("±¼¸²", Font.PLAIN, 30));
 		xyButton.setBounds(12, 537, 293, 42);
 		getContentPane().add(xyButton);
+	
 		xyButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -317,6 +318,21 @@ public class AdminFrame extends JFrame {
 			}
 		} );
 
+		JButton toUser = new JButton("\uC0AC\uC6A9\uC790\uBAA8\uB4DC");
+		toUser.setFont(new Font("±¼¸²", Font.PLAIN, 40));
+		toUser.setBounds(520, 581, 412, 50);
+		getContentPane().add(toUser);
+		toUser.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+			    EGPS frame = new EGPS(false);
+				frame.setBounds(new Rectangle(1468, 950));
+				frame.setVisible(true);
+				dispose();
+			}
+		});
 	}
 	
 	public static void updateTable(Connection conn)
