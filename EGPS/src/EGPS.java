@@ -27,6 +27,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
+import javax.swing.JPasswordField;
 
 /**
  * 
@@ -200,9 +201,9 @@ public class EGPS extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String resultStr = null;
-				resultStr = JOptionPane.showInputDialog("비밀번호 입력하세요.");
-				if (resultStr.equals("123")) {
+				JPasswordField resultStr = new JPasswordField();
+				JOptionPane.showMessageDialog(null, resultStr, "비밀번호", JOptionPane.QUESTION_MESSAGE);
+				if (resultStr.getText().equals("123")) {
 					EGPS.isAdmin = true;
 					Thread adminThread = new AdminThread(conn);
 					adminThread.start();

@@ -107,7 +107,7 @@ public class AdminFrame extends JFrame {
 		JButton addButton = new JButton("\uCD94\uAC00");
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//  눌렸을 때
+				// 추가 눌렸을 때
 				if(!adminActive.isAdd){
 					adminActive.isAdd = true;
 					Thread addScreen = new AddScreenThread(conn,adminActive);
@@ -161,7 +161,7 @@ public class AdminFrame extends JFrame {
 				else if(select == 3) //	선택된 물품
 					obj = new Spec_admin();
 				
-				obj.change(table, conn,true); // modify
+				obj.change(table, conn, true); // modify
 			}
 		});
 		modifyButton.setFont(new Font("굴림", Font.PLAIN, 40));

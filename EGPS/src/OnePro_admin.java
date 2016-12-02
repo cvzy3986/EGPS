@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -37,6 +38,7 @@ public class OnePro_admin implements ProductAdmin {
 		this.form = form;
 	
 	}
+	//추가
 	public int change(Connection conn) {
 		PreparedStatement menuQuery;
 		
@@ -70,6 +72,20 @@ public class OnePro_admin implements ProductAdmin {
 			menuQuery.executeUpdate();
 			PopupMenu.setPopMenuToButton(conn); // 팝업 메뉴 갱신
 			JOptionPane.showMessageDialog(null, "추가되었습니다.");
+			
+			//리스트에 추가한 상품 추가
+			ArrayList<String> row = new ArrayList<>();
+			row.add(form.getPid()); // pid
+			row.add(form.getPname()); // pname
+			row.add(form.getCost()); // cost
+			row.add(form.getFloor()); // floor
+			row.add(form.getCategory()); // category
+			row.add(form.getCid()); // cid
+			row.add(form.getX()); // x
+			row.add(form.getY()); // y
+			row.add(form.getURL()); // URL
+			AdminFrame.modelout.addRow(row.toArray());
+			row.clear();
 			
 			return 0; //정상 처리 시 여기서 0을 리턴하고 종료
 		}catch (SQLException sqle){
@@ -122,7 +138,6 @@ public class OnePro_admin implements ProductAdmin {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		;
 	}
 
 	//삭제

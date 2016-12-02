@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 class SearchButtonActionAdmin implements ActionListener {
@@ -21,6 +22,10 @@ class SearchButtonActionAdmin implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		String product = searchField.getText();
+		if(product.length() == 0) {	//검색어가 없을 때
+			JOptionPane.showMessageDialog(null, "검색어를 입력해주세요.");
+			return;
+		}
 		try {
 			while (AdminFrame.modelout.getRowCount() != 0)
 				AdminFrame.modelout.removeRow(0);
@@ -29,6 +34,10 @@ class SearchButtonActionAdmin implements ActionListener {
 			query.setString(1, "%" + product + "%");
 			System.out.println(query);
 			ResultSet rset = query.executeQuery();
+			if(!rset.next()){	//검색 결과가 없을때
+				JOptionPane.showMessageDialog(null, "검색 결과가 존재하지 않습니다.");
+				return;
+			}
 			ArrayList<String> row = new ArrayList<>();
 			while (rset.next()) {
 				row.add(rset.getString(1)); // pid
