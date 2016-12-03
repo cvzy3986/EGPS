@@ -25,6 +25,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -47,13 +48,15 @@ public class AdminFrame extends JFrame {
 	public static DefaultTableModel modelout = new DefaultTableModel();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	static int select = 1;
+	static Container container;
+	
 	/**
 	 * Create the frame.
 	 */
 	public AdminFrame(Connection conn) {
 		setBounds(100, 100, 954, 743);
 		getContentPane().setLayout(null);
-
+		AdminFrame.container = getContentPane();
 		IsAdminActive adminActive = new IsAdminActive();
 		
 		JButton searchButton = new JButton("검 색");
@@ -73,7 +76,8 @@ public class AdminFrame extends JFrame {
 			tabbedPane.add(floorstr, screen.panels.panelArray[i]);
 		}
 		getContentPane().add(tabbedPane);
-
+		
+///////////////////////////////////////////////////////////////////////////////////////
 		scrollPane = new JScrollPane();
 
 		scrollPane.setBounds(317, 10, 609, 439);
@@ -199,18 +203,22 @@ public class AdminFrame extends JFrame {
 			}
 		});
 		
-		JButton Categoryadd = new JButton("카테고리 추가");
+		JButton Categoryadd = new JButton("카테고리 수정");
 		Categoryadd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!adminActive.isCate) {
 					adminActive.isCate=true;
-					Category_admin mana = new Category_admin(conn);
+					Category_admin mana = new Category_admin(conn,tabbedPane);
 					mana.setBounds(new Rectangle(400, 300));
 					mana.setVisible(true);
 					mana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					mana.addWindowListener(new WindowAdapter() {
 						public void windowClosing(WindowEvent e){
 								adminActive.isCate=false;
+								dispose();
+								EGPS.isAdmin = true;
+								Thread adminThread = new AdminThread(conn);
+								adminThread.start();
 						   }
 					});
 				}
@@ -333,8 +341,9 @@ public class AdminFrame extends JFrame {
 				dispose();
 			}
 		});
+		
 	}
-	
+
 	public static void updateTable(Connection conn)
 	{
 			// table에서 한줄씩 비우고 pid를 큐에 저장 
