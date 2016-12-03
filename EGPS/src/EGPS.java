@@ -43,6 +43,7 @@ public class EGPS extends JFrame {
 	public static ProductDrawImage panel = new ProductDrawImage();
 	public static boolean isAdmin;
 	public static Connection conn;
+	public static MapImage mapImage;
 
 	/**
 	 * Launch the application.
@@ -94,7 +95,7 @@ public class EGPS extends JFrame {
 		ArrayList<Image> arrFloor = new ArrayList<>();
 		getFloorImage(arrFloor, conn);
 
-		MapImage mapImage = new MapImage();
+		mapImage = new MapImage();
 		mapImage.setBounds(438, 376, 1000, 490);
 		getContentPane().add(mapImage);
 
