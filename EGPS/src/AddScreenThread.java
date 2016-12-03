@@ -16,7 +16,7 @@ public class AddScreenThread extends Thread{
 	}
 	public void run(){
 		Add_Screen addComp = new Add_Screen(conn);
-		addComp.setBounds(new Rectangle(600, 500));			
+		addComp.setBounds(new Rectangle(1100, 1000));			
 		addComp.setVisible(true);
 		addComp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		

@@ -54,6 +54,7 @@ public class AdminFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public AdminFrame(Connection conn) {
+		getContentPane().setBackground(new Color(219,208,186));
 		setBounds(100, 100, 954, 743);
 		getContentPane().setLayout(null);
 		AdminFrame.container = getContentPane();
@@ -67,6 +68,7 @@ public class AdminFrame extends JFrame {
 		getContentPane().add(searchButton);
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(12, 10, 293, 397);
+		tabbedPane.setBackground(new Color(228,211,197));
 		tabbedPane.setFont(new Font("굴림", Font.BOLD, 37));
 
 		Category_Screen screen = new Category_Screen(conn);
@@ -109,6 +111,8 @@ public class AdminFrame extends JFrame {
 		scrollPane.setViewportView(table);
 
 		JButton addButton = new JButton("\uCD94\uAC00");
+		addButton.setBackground(new Color(85,75,75));
+		addButton.setForeground(new Color(255,255,255));
 		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// 추가 눌렸을 때
@@ -125,12 +129,15 @@ public class AdminFrame extends JFrame {
 		getContentPane().add(addButton);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(219,208,186));
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "\uC635\uC158", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		panel.setBounds(327, 459, 282, 120);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JButton deleteButton = new JButton("\uC0AD\uC81C");
+		deleteButton.setBackground(new Color(85,75,75));
+		deleteButton.setForeground(new Color(255,255,255));
 		deleteButton.setBounds(135, 65, 135, 41);
 		panel.add(deleteButton);
 		
@@ -151,6 +158,8 @@ public class AdminFrame extends JFrame {
 		deleteButton.setFont(new Font("굴림", Font.PLAIN, 40));
 
 		JButton modifyButton = new JButton("\uC218\uC815");
+		modifyButton.setBackground(new Color(85,75,75));
+		modifyButton.setForeground(new Color(255,255,255));
 		modifyButton.setBounds(135, 17, 135, 41);
 		panel.add(modifyButton);
 		modifyButton.addActionListener(new ActionListener() {
@@ -171,17 +180,20 @@ public class AdminFrame extends JFrame {
 		modifyButton.setFont(new Font("굴림", Font.PLAIN, 40));
 		
 		JRadioButton oneRadio = new JRadioButton("\uC120\uD0DD\uD55C \uBB3C\uD488");
+		oneRadio.setBackground(new Color(219,208,186));
 		oneRadio.setBounds(6, 24, 121, 23);
 		panel.add(oneRadio);
 		buttonGroup.add(oneRadio);
 		oneRadio.setSelected(true);
 		
 		JRadioButton multiRadio = new JRadioButton("\uD14C\uC774\uBE14 \uC804\uCCB4");
+		multiRadio.setBackground(new Color(219,208,186));
 		multiRadio.setBounds(6, 54, 121, 23);
 		panel.add(multiRadio);
 		buttonGroup.add(multiRadio);
 		
 		JRadioButton specRadio = new JRadioButton("\uC120\uD0DD\uB41C \uBB3C\uD488\uB4E4");
+		specRadio.setBackground(new Color(219,208,186));
 		specRadio.setBounds(6, 84, 121, 23);
 		panel.add(specRadio);
 		buttonGroup.add(specRadio);
@@ -204,6 +216,8 @@ public class AdminFrame extends JFrame {
 		});
 		
 		JButton Categoryadd = new JButton("카테고리 수정");
+		Categoryadd.setBackground(new Color(85,75,75));
+		Categoryadd.setForeground(new Color(255,255,255));
 		Categoryadd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!adminActive.isCate) {
@@ -237,10 +251,6 @@ public class AdminFrame extends JFrame {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					// TODO Auto-generated method stub
 					String product = searchField.getText();
-					if(product.length() == 0) {	//검색어가 없을 때
-						JOptionPane.showMessageDialog(null, "검색어를 입력해주세요.");
-						return;
-					}
 					try {
 						while (AdminFrame.modelout.getRowCount() != 0)
 						{
@@ -253,11 +263,6 @@ public class AdminFrame extends JFrame {
 						query.setString(1, "%" + product + "%");
 						System.out.println(query);
 						ResultSet rset = query.executeQuery();
-						if(!rset.next()){	//검색 결과가 없을때
-							JOptionPane.showMessageDialog(null, "검색 결과가 존재하지 않습니다.");
-							return;
-						}
-						rset = query.executeQuery();
 						ArrayList<String> row = new ArrayList<>();
 						while (rset.next()) {
 							row.add(rset.getString(1)); // pid
@@ -279,13 +284,15 @@ public class AdminFrame extends JFrame {
 			}
 		});
 
-		searchField.setFont(new Font("굴림", Font.PLAIN, 25));
+		searchField.setFont(new Font("굴림", Font.PLAIN, 28));
 		searchField.setBounds(12, 417, 176, 50);
 		getContentPane().add(searchField);
 		searchField.setColumns(10);
 		searchButton.addActionListener(new SearchButtonActionAdmin(conn, searchField));
 
 		JButton updateButton = new JButton("\uAC31\uC2E0");
+		updateButton.setBackground(new Color(85,75,75));
+		updateButton.setForeground(new Color(255,255,255));
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// 갱신 버튼 클릭 시
@@ -298,6 +305,8 @@ public class AdminFrame extends JFrame {
 		getContentPane().add(updateButton);
 		
 		JButton removeButton = new JButton("\uC9C0\uC6B0\uAE30");
+		removeButton.setBackground(new Color(85,75,75));
+		removeButton.setForeground(new Color(255,255,255));
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//지우기 버튼 클릭 시 , 선택한 물품 테이블에서 뺀다
@@ -309,6 +318,8 @@ public class AdminFrame extends JFrame {
 		removeButton.setBounds(791, 477, 135, 41);
 		getContentPane().add(removeButton);
 		JButton cleanButton = new JButton("\uBE44\uC6B0\uAE30");
+		cleanButton.setBackground(new Color(85,75,75));
+		cleanButton.setForeground(new Color(255,255,255));
 		cleanButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//비우기 버튼 클릭시 , 테이블은 비운다.
@@ -321,6 +332,8 @@ public class AdminFrame extends JFrame {
 		getContentPane().add(cleanButton);
 		
 		JButton xyButton = new JButton("\uC9C0\uB3C4 \uC88C\uD45C\uD655\uC778");
+		xyButton.setBackground(new Color(85,75,75));
+		xyButton.setForeground(new Color(255,255,255));
 		xyButton.setFont(new Font("굴림", Font.PLAIN, 30));
 		xyButton.setBounds(12, 537, 293, 42);
 		getContentPane().add(xyButton);
@@ -336,6 +349,8 @@ public class AdminFrame extends JFrame {
 		} );
 
 		JButton toUser = new JButton("\uC0AC\uC6A9\uC790\uBAA8\uB4DC");
+		toUser.setBackground(new Color(85,75,75));
+		toUser.setForeground(new Color(255,255,255));
 		toUser.setFont(new Font("굴림", Font.PLAIN, 40));
 		toUser.setBounds(520, 581, 412, 50);
 		getContentPane().add(toUser);

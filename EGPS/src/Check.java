@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,6 +37,7 @@ public class Check extends JFrame {
 		setBounds(100, 100, 1133, 758);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(219,208,186));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
@@ -66,16 +68,25 @@ public class Check extends JFrame {
 		contentPane.add(panel);
 		
 		JButton Floor1 = new JButton("1\uCE35");
+		Floor1.setBackground(new Color(85,75,75));
+		Floor1.setForeground(Color.WHITE);
+		Floor1.setFont(new Font("±¼¸²", Font.PLAIN, 28));
 		Floor1.setBounds(495, 555, 174, 65);
 		Floor1.addActionListener(new ButtonAction(0,panel));
 		contentPane.add(Floor1);
 		
 		JButton Floor2 = new JButton("2\uCE35");
+		Floor2.setBackground(new Color(85,75,75));
+		Floor2.setForeground(Color.WHITE);
+		Floor2.setFont(new Font("±¼¸²", Font.PLAIN, 28));
 		Floor2.setBounds(688, 555, 188, 65);
 		Floor2.addActionListener(new ButtonAction(1,panel));
 		contentPane.add(Floor2);
 		
 		JButton Floor3 = new JButton("3\uCE35");
+		Floor3.setBackground(new Color(85,75,75));
+		Floor3.setForeground(Color.WHITE);
+		Floor3.setFont(new Font("±¼¸²", Font.PLAIN, 28));
 		Floor3.setBounds(888, 555, 162, 65);
 		Floor3.addActionListener(new ButtonAction(2,panel));
 		contentPane.add(Floor3);
