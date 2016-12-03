@@ -36,6 +36,7 @@ class MenuActionListener implements ActionListener {
 				    EGPS.PRODUCT.setX(rset.getInt(5));
 				    EGPS.PRODUCT.setY(rset.getInt(6));
 					EGPS.panel.repaint();
+					EGPS.mapImage.repaint();
 				}
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
