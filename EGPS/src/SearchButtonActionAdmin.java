@@ -38,6 +38,7 @@ class SearchButtonActionAdmin implements ActionListener {
 				JOptionPane.showMessageDialog(null, "검색 결과가 존재하지 않습니다.");
 				return;
 			}
+			rset = query.executeQuery();
 			ArrayList<String> row = new ArrayList<>();
 			while (rset.next()) {
 				row.add(rset.getString(1)); // pid
