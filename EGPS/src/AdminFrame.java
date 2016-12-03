@@ -321,7 +321,7 @@ public class AdminFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Thread thread  = new CheckThread();
+				Thread thread  = new CheckThread(conn);
 				thread.start();
 			}
 		} );
