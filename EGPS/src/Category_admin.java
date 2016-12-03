@@ -16,6 +16,7 @@ import javax.swing.JTabbedPane;
 
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.awt.Font;
+import java.awt.Color;
 
 
 //@TODO Ä«Å×°í¸® Ãß°¡, »èÁ¦
@@ -46,6 +47,7 @@ public class Category_admin extends javax.swing.JFrame {
 
     	CateAdmin_form cate = new CateAdmin_form();
     	contentPane = new JPanel();
+    	contentPane.setBackground(new Color(219,208,186));
         jLabel1 = new javax.swing.JLabel();
         jLabel1.setFont(new Font("±¼¸²", Font.BOLD, 40));
         jLabel2 = new javax.swing.JLabel();
@@ -55,15 +57,19 @@ public class Category_admin extends javax.swing.JFrame {
         Catedel = new javax.swing.JLabel();
         Catedel.setFont(new Font("±¼¸²", Font.BOLD, 40));
         jTextField1 = new javax.swing.JTextField();
-        jTextField1.setFont(new Font("±¼¸²", Font.PLAIN, 32));
+        jTextField1.setFont(new Font("±¼¸²", Font.PLAIN, 28));
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jTextField3.setFont(new Font("±¼¸²", Font.PLAIN, 25));
+        jTextField3.setFont(new Font("±¼¸²", Font.PLAIN, 28));
         CatedelText = new javax.swing.JTextField();
-        CatedelText.setFont(new Font("±¼¸²", Font.PLAIN, 25));
+        CatedelText.setFont(new Font("±¼¸²", Font.PLAIN, 28));
         jButton1 = new javax.swing.JButton();
+        jButton1.setBackground(new Color(85,75,75));
+        jButton1.setForeground(new Color(255,255,255));
         jButton1.setFont(new Font("±¼¸²", Font.BOLD, 45));
         Del = new javax.swing.JButton();
+        Del.setBackground(new Color(85,75,75));
+        Del.setForeground(new Color(255,255,255));
         Del.setFont(new Font("±¼¸²", Font.BOLD, 45));
         setContentPane(contentPane);
 
@@ -94,7 +100,7 @@ public class Category_admin extends javax.swing.JFrame {
         
 		
 		JComboBox floorbox = new JComboBox();
-		floorbox.setFont(new Font("±¼¸²", Font.PLAIN, 45));
+		floorbox.setFont(new Font("±¼¸²", Font.PLAIN, 28));
 		floorbox.setBounds(479, 410, 242, 73);
 		contentPane.add(floorbox);
 		//	cid¸¦ ¹Þ¾Æ¿Í ÄÞº¸¹Ú½º¿¡ Ãß°¡
@@ -147,12 +153,12 @@ public class Category_admin extends javax.swing.JFrame {
         
         CatedelText.setText("Cname");
         getContentPane().add(CatedelText);
-        CatedelText.setBounds(479, 245, 246, 90);
+        CatedelText.setBounds(479, 245, 246, 73);
         
         
         Del.setText("»è Á¦");       
         getContentPane().add(Del);
-        Del.setBounds(547, 789, 174, 63);
+        Del.setBounds(547, 789, 174, 73);
         Del.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PreparedStatement query;
