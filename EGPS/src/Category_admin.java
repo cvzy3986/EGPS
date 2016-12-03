@@ -87,23 +87,10 @@ public class Category_admin extends javax.swing.JFrame {
         getContentPane().add(jTextField3);
         jTextField3.setBounds(479, 671, 242, 73);
         
-
-        JComboBox cidBox = new JComboBox();
-        cidBox.setFont(new Font("±¼¸²", Font.PLAIN, 45));
-		cidBox.setBounds(479, 93, 242, 79);
-		contentPane.add(cidBox);
-		//	cid¸¦ ¹Þ¾Æ¿Í ÄÞº¸¹Ú½º¿¡ Ãß°¡
-		
-		try {
-			Statement stmt = conn.createStatement();
-			ResultSet rset = stmt.executeQuery("Select cid from category");
-			while (rset.next()) {
-				cidBox.addItem(rset.getInt(1));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        jTextField1.setText("Cid");
+        getContentPane().add(jTextField1);
+        jTextField1.setBounds(479, 93, 242, 73);
+        
 		
 		JComboBox floorbox = new JComboBox();
 		floorbox.setFont(new Font("±¼¸²", Font.PLAIN, 45));
@@ -130,7 +117,7 @@ public class Category_admin extends javax.swing.JFrame {
 				PreparedStatement query;
 				try {
 			        cate.setFloor(floorbox.getSelectedItem().toString());
-			        cate.setCid(cidBox.getSelectedItem().toString());
+			        cate.setCid(jTextField1.getText());
 			        cate.setCname(jTextField3.getText());
 			       
 		
