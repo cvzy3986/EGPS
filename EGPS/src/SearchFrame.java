@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -24,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ScrollPaneConstants;
 
 
 class SearchFrame extends JFrame{
@@ -32,17 +34,19 @@ class SearchFrame extends JFrame{
    private JTextField textField;
    private MapImage mapImage;
    public SearchFrame(JTextField textField,Connection conn,MapImage mapImage) {
+   	setBackground(new Color(219, 208, 186));
 	   
 	    this.textField= textField;
 		this.conn = conn;
 		this.mapImage = mapImage;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 780, 688);
+		setBounds(100, 100, 780, 900);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBackground(new Color(219, 208, 186));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+		this.setBackground(new Color(219, 208, 186));
 	    ArrayList<Image> arrFloor = new ArrayList<>();
 	    EGPS.getFloorImage(arrFloor,conn);
 		
@@ -50,10 +54,14 @@ class SearchFrame extends JFrame{
 		DefaultTableModel modelout = new DefaultTableModel(out, 10);
 		JLabel lblNewLabel = new JLabel("검색 기록");
 		lblNewLabel.setBounds(12, 10, 69, 20);
+		lblNewLabel.setBackground(new Color(219, 208, 186));
 		contentPane.add(lblNewLabel);
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setEnabled(false);
 		scrollPane.setBounds(22, 41, 950, 800);
+		scrollPane.setBackground(new Color(219, 208, 186));
 		getContentPane().add(scrollPane);
 		JTable table;
 		table = new JTable(modelout);
@@ -61,6 +69,7 @@ class SearchFrame extends JFrame{
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.getColumnModel().getColumn(0).setPreferredWidth(805);
 		table.getColumnModel().getColumn(1).setPreferredWidth(200);
+		//table.setBackground(new Color(219, 208, 186));
 		
 		table.setRowHeight(100);
 		table.setFont(new Font("Dialog", Font.BOLD, 23));

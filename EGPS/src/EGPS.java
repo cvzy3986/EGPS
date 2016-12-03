@@ -28,6 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
 import javax.swing.JPasswordField;
+import javax.swing.border.LineBorder;
 
 /**
  * 
@@ -67,6 +68,7 @@ public class EGPS extends JFrame {
 	 * Create the frame.
 	 */
 	public EGPS(boolean isDBaccess) {
+		getContentPane().setBackground(new Color(219,208,186));
 		isAdmin = false;
 		IsSearchActive SearchActive = new IsSearchActive();
 		IsAdminActive adminActive = new IsAdminActive();
@@ -101,7 +103,7 @@ public class EGPS extends JFrame {
 		getContentPane().add(logo);
 
 		JTextField textField = new JTextField();
-		textField.setBounds(21, 753, 246, 50);
+		textField.setBounds(21, 753, 275, 50);
 		getContentPane().add(textField);
 		textField.setColumns(10);
 		// 엔터로 검색
@@ -152,8 +154,10 @@ public class EGPS extends JFrame {
 		searchButton.addActionListener(new SearchButtonActionListener(textField, conn, mapImage, SearchActive));
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP); // tabbedPane이 바뀔 때마다 지도 바뀜
+		tabbedPane.setBackground(new Color(228,211,197));
 		tabbedPane.addChangeListener(new TabChangeListener(mapImage, arrFloor));
-		tabbedPane.setFont(new Font("굴림", Font.BOLD, 37));
+		tabbedPane.setFont(new Font("HY엽서M", Font.BOLD, 32));
+//		tabbedPane.setForeground(new Color(255,255,255));
 		tabbedPane.setBounds(17, 175, 334, 537);
 
 		Category_Screen screen = new Category_Screen(conn);
@@ -165,36 +169,45 @@ public class EGPS extends JFrame {
 		getContentPane().add(tabbedPane);
 
 		JPanel infoScreen = new JPanel();
-		infoScreen.setBackground(Color.ORANGE);
-		infoScreen.setBounds(438, 30, 1000, 276);
+		infoScreen.setBorder(new LineBorder(Color.WHITE, 5, true));
+		infoScreen.setBackground(new Color(219, 208, 186));
+		infoScreen.setBounds(438, 30, 1000, 280);
 		getContentPane().add(infoScreen);
 		infoScreen.setLayout(null);
+		textPname.setBackground(new Color(219,208,186));
 		textPname.setEditable(false);
 
-		textPname.setFont(new Font("굴림", Font.PLAIN, 28));
-		textPname.setBounds(440, 26, 543, 97);
+		textPname.setFont(new Font("양재인장체M", Font.BOLD, 28));
+		textPname.setBounds(457, 38, 511, 97);
+//		textPname.setBorder(new LineBorder(Color.WHITE, 2, true));
 		infoScreen.add(textPname);
+		textCost.setBackground(new Color(219,208,186));
 		textCost.setEditable(false);
 
-		textCost.setFont(new Font("굴림", Font.PLAIN, 30));
-		textCost.setBounds(667, 201, 300, 61);
+		textCost.setFont(new Font("양재인장체M", Font.BOLD, 30));
+		textCost.setBounds(668, 212, 300, 61);
+//		textCost.setBorder(new LineBorder(Color.WHITE, 2, true));
 		infoScreen.add(textCost);
 
 		JLabel lblNewLabel = new JLabel("\uC0C1\uD488 \uC774\uB984: ");
-		lblNewLabel.setFont(new Font("굴림", Font.BOLD, 27));
+		lblNewLabel.setFont(new Font("양재인장체M", Font.BOLD, 29));
 		lblNewLabel.setBounds(303, 26, 165, 61);
 		infoScreen.add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("\uAC00\uACA9: ");
-		lblNewLabel_1.setFont(new Font("굴림", Font.BOLD, 27));
+		lblNewLabel_1.setFont(new Font("양재인장체M", Font.BOLD, 30));
 		lblNewLabel_1.setBounds(595, 200, 144, 61);
 		infoScreen.add(lblNewLabel_1);
+		panel.setBorder(new LineBorder(Color.WHITE, 5));
+		panel.setBackground(new Color(119, 136, 153));
 
-		panel.setBounds(0, 0, 300, 276);
+		panel.setBounds(5, 5, 293, 272);
 		infoScreen.add(panel);
 
 		JButton adminButton = new JButton("관리자");
 		adminButton.setFont(new Font("굴림", Font.PLAIN, 30));
+		adminButton.setBackground(new Color(85,75,75));
+		adminButton.setForeground(new Color(255,255,255));		
 		adminButton.setBounds(17, 818, 393, 62);
 		getContentPane().add(adminButton);
 		adminButton.addActionListener(new ActionListener() {
