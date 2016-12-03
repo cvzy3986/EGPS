@@ -103,6 +103,7 @@ public class EGPS extends JFrame {
 		getContentPane().add(logo);
 
 		JTextField textField = new JTextField();
+		textField.setFont(new Font("±¼¸²", Font.PLAIN, 28));
 		textField.setBounds(21, 753, 275, 50);
 		getContentPane().add(textField);
 		textField.setColumns(10);

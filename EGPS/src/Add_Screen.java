@@ -30,6 +30,8 @@ import java.util.HashMap;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import java.awt.Color;
 
 public class Add_Screen extends JFrame {
 	private JPanel contentPane;
@@ -63,19 +65,21 @@ public class Add_Screen extends JFrame {
 		/**
 		 * Create the frame.
 		 */
-		setBounds(100, 100, 419, 284);
+		setBounds(100, 100, 1600, 1600);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(219,208,186));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		 this.setResizable(false); // Ã¢ÀÇ È®ÀåÀ» ¸·´Â ¸Þ¼­µå
+//		 this.setResizable(false); // Ã¢ÀÇ È®ÀåÀ» ¸·´Â ¸Þ¼­µå
 		
 		ArrayList<JTextField> fields = new ArrayList<>();
 		ArrayList<JComboBox> combos = new ArrayList<>();
 		
 		pidField = new JTextField();
+		pidField.setFont(new Font("±¼¸²", Font.PLAIN, 28));
 		pidField.setEditable(false);
-		pidField.setBounds(55, 10, 90, 21);
+		pidField.setBounds(211, 83, 275, 50);
 		contentPane.add(pidField);
 		pidField.setColumns(10);
 		//Ãß°¡ÇÒ ¹°Ç°ÀÇ pid¸¦ ±¸ÇÑ´Ù. pid = max(pid)+1 from product
@@ -92,38 +96,45 @@ public class Add_Screen extends JFrame {
 		
 
 		pnameField = new JTextField();
-		pnameField.setBounds(226, 10, 163, 21);
+		pnameField.setFont(new Font("±¼¸²", Font.PLAIN, 28));
+		pnameField.setBounds(734, 83, 275, 50);
 		contentPane.add(pnameField);
 		pnameField.setColumns(10);
 
 		costField = new JTextField();
-		costField.setBounds(226, 41, 163, 21);
+		costField.setFont(new Font("±¼¸²", Font.PLAIN, 28));
+		costField.setBounds(734, 200, 275, 50);
 		contentPane.add(costField);
 		costField.setColumns(10);
 		
 		imageField = new JTextField();
+		imageField.setFont(new Font("±¼¸²", Font.PLAIN, 28));
 		imageField.setEditable(false);
-		imageField.setBounds(55, 104, 225, 21);
+		imageField.setBounds(211, 440, 598, 50);
 		contentPane.add(imageField);
 		imageField.setColumns(10);
 		
 		xField = new JTextField();
-		xField.setBounds(55, 133, 90, 20);
+		xField.setFont(new Font("±¼¸²", Font.PLAIN, 28));
+		xField.setBounds(211, 568, 275, 50);
 		contentPane.add(xField);
 		xField.setColumns(10);
 
 		yField = new JTextField();
-		yField.setBounds(226, 133, 90, 20);
+		yField.setFont(new Font("±¼¸²", Font.PLAIN, 28));
+		yField.setBounds(734, 568, 275, 50);
 		contentPane.add(yField);
 		yField.setColumns(10);
 
 		URLField = new JTextField();
-		URLField.setBounds(55, 163, 308, 21);
+		URLField.setFont(new Font("±¼¸²", Font.PLAIN, 28));
+		URLField.setBounds(211, 673, 798, 50);
 		contentPane.add(URLField);
 		URLField.setColumns(10);
 		
 		JComboBox cidBox = new JComboBox();
-		cidBox.setBounds(55, 72, 90, 21);
+		cidBox.setFont(new Font("±¼¸²", Font.PLAIN, 28));
+		cidBox.setBounds(211, 320, 275, 50);
 		contentPane.add(cidBox);
 		//	cid¸¦ ¹Þ¾Æ¿Í ÄÞº¸¹Ú½º¿¡ Ãß°¡
 		
@@ -139,7 +150,8 @@ public class Add_Screen extends JFrame {
 		}
 		
 		JComboBox cnameBox = new JComboBox();
-		cnameBox.setBounds(226, 72, 163, 21);
+		cnameBox.setFont(new Font("±¼¸²", Font.PLAIN, 28));
+		cnameBox.setBounds(734, 320, 275, 50);
 		contentPane.add(cnameBox);
 		// cname¸¦ ¹Þ¾Æ¿Í ÄÞº¸¹Ú½º¿¡ Ãß°¡
 		try {
@@ -154,7 +166,8 @@ public class Add_Screen extends JFrame {
 		}
 
 		JComboBox floorBox = new JComboBox();
-		floorBox.setBounds(55, 41, 90, 21);
+		floorBox.setFont(new Font("±¼¸²", Font.PLAIN, 28));
+		floorBox.setBounds(211, 200, 275, 50);
 		contentPane.add(floorBox);
 		// floor¸¦ ¹Þ¾Æ¿Í ÄÞº¸¹Ú½º¿¡ Ãß°¡
 		try {
@@ -169,8 +182,11 @@ public class Add_Screen extends JFrame {
 		}
 		
 		JButton fileButton = new JButton("\uD30C\uC77C \uC120\uD0DD");
+		fileButton.setBackground(new Color(85,75,75));
+		fileButton.setForeground(new Color(255,255,255));
+		fileButton.setFont(new Font("±¼¸²", Font.PLAIN, 30));
 		fileButton.addActionListener(new UploadActionListener(imageField));
-		fileButton.setBounds(292, 103, 97, 23);
+		fileButton.setBounds(821, 440, 188, 50);
 		contentPane.add(fileButton);
 		
 		//arraylist¿¡ Ãß°¡
@@ -181,59 +197,75 @@ public class Add_Screen extends JFrame {
 		combos.add(cidBox); combos.add(cnameBox); combos.add(floorBox);
 
 		JLabel lblPid = new JLabel("pid");
-		lblPid.setBounds(12, 13, 57, 15);
+		lblPid.setFont(new Font("±¼¸²", Font.PLAIN, 35));
+		lblPid.setBounds(71, 65, 114, 69);
 		contentPane.add(lblPid);
 
 		JLabel lblPanme = new JLabel("pname");
-		lblPanme.setBounds(157, 13, 57, 15);
+		lblPanme.setFont(new Font("±¼¸²", Font.PLAIN, 35));
+		lblPanme.setBounds(552, 73, 168, 53);
 		contentPane.add(lblPanme);
 
 		JLabel lblCost = new JLabel("cost");
-		lblCost.setBounds(157, 44, 57, 15);
+		lblCost.setFont(new Font("±¼¸²", Font.PLAIN, 35));
+		lblCost.setBounds(552, 196, 96, 41);
 		contentPane.add(lblCost);
 
 		JLabel lblFloor = new JLabel("floor");
-		lblFloor.setBounds(12, 44, 57, 15);
+		lblFloor.setFont(new Font("±¼¸²", Font.PLAIN, 35));
+		lblFloor.setBounds(71, 177, 150, 81);
 		contentPane.add(lblFloor);
 
 		JLabel lblCategory = new JLabel("category");
-		lblCategory.setBounds(157, 75, 57, 15);
+		lblCategory.setFont(new Font("±¼¸²", Font.PLAIN, 35));
+		lblCategory.setBounds(552, 312, 205, 50);
 		contentPane.add(lblCategory);
 
 		lblCid = new JLabel("cid");
-		lblCid.setBounds(12, 75, 57, 15);
+		lblCid.setFont(new Font("±¼¸²", Font.PLAIN, 35));
+		lblCid.setBounds(71, 307, 114, 60);
 		contentPane.add(lblCid);
 
 		lblImage = new JLabel("image");
-		lblImage.setBounds(12, 107, 57, 15);
+		lblImage.setFont(new Font("±¼¸²", Font.PLAIN, 35));
+		lblImage.setBounds(71, 440, 160, 62);
 		contentPane.add(lblImage);
 
 		lblX = new JLabel("x");
-		lblX.setBounds(12, 134, 57, 15);
+		lblX.setFont(new Font("±¼¸²", Font.PLAIN, 35));
+		lblX.setBounds(71, 531, 275, 107);
 		contentPane.add(lblX);
 
 		lblY = new JLabel("y");
-		lblY.setBounds(157, 136, 57, 15);
+		lblY.setFont(new Font("±¼¸²", Font.PLAIN, 35));
+		lblY.setBounds(620, 531, 137, 107);
 		contentPane.add(lblY);
 
 		lblUrl = new JLabel("URL");
-		lblUrl.setBounds(12, 167, 57, 15);
+		lblUrl.setFont(new Font("±¼¸²", Font.PLAIN, 35));
+		lblUrl.setBounds(71, 669, 129, 41);
 		contentPane.add(lblUrl);
 
 		addButton = new JButton("\uCD94\uAC00");
+		addButton.setBackground(new Color(85,75,75));
+		addButton.setForeground(new Color(255,255,255));
+		addButton.setFont(new Font("±¼¸²", Font.PLAIN, 35));
 		addButton.addActionListener(new addProActionListener(fields, combos, conn));
 			
-		addButton.setBounds(81, 201, 97, 34);
+		addButton.setBounds(318, 835, 168, 69);
 		contentPane.add(addButton);
 
 		cancleButton = new JButton("\uCDE8\uC18C");
+		cancleButton.setBackground(new Color(85,75,75));
+		cancleButton.setForeground(new Color(255,255,255));
+		cancleButton.setFont(new Font("±¼¸²", Font.PLAIN, 35));
 		cancleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//Ãë¼Ò ¹öÆ° Å¬¸¯
 				dispose();
 			}
 		});
-		cancleButton.setBounds(214, 201, 97, 34);
+		cancleButton.setBounds(552, 835, 170, 69);
 		contentPane.add(cancleButton);
 	}
 }
