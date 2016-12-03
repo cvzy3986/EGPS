@@ -194,7 +194,7 @@ public class EGPS extends JFrame {
 		textCost.setEditable(false);
 
 		textCost.setFont(new Font("양재인장체M", Font.BOLD, 30));
-		textCost.setBounds(668, 212, 300, 61);
+		textCost.setBounds(668, 200, 300, 61);
 //		textCost.setBorder(new LineBorder(Color.WHITE, 2, true));
 		infoScreen.add(textCost);
 
