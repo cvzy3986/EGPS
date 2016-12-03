@@ -188,7 +188,7 @@ public class EGPS extends JFrame {
 		textPname.setEditable(false);
 
 		textPname.setFont(new Font("양재인장체M", Font.BOLD, 28));
-		textPname.setBounds(457, 38, 511, 97);
+		textPname.setBounds(457, 31, 511, 97);
 //		textPname.setBorder(new LineBorder(Color.WHITE, 2, true));
 		infoScreen.add(textPname);
 		textCost.setBackground(new Color(219,208,186));
