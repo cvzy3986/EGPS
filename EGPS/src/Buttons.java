@@ -35,9 +35,9 @@ public class Buttons {
 		PopupMenu popmenus = new PopupMenu(conn);
 		for(int i=0; i<cateSize;i++){
 			CategoryButtons[i] = new JButton(Categorys.get(i).category);
-			CategoryButtons[i].setForeground(Color.YELLOW);
-			CategoryButtons[i].setBackground(Color.GRAY);
-			CategoryButtons[i].setFont(new Font("±¼¸²", Font.BOLD, 22));
+			CategoryButtons[i].setForeground(new Color(255,255,255));
+			CategoryButtons[i].setBackground(new Color(84,75,75));
+			CategoryButtons[i].setFont(new Font("HYµ¿³èM", Font.BOLD, 22));
 			CategoryButtons[i].addMouseListener(new MouseClickEvent(Categorys.get(i).cid,CategoryButtons[i],popmenus));
 		}
 	}
