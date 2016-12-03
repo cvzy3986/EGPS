@@ -24,7 +24,7 @@ public class Category_admin extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
 
-	///fsfs
+	
     
     public Category_admin(Connection conn) {
 		// TODO Auto-generated constructor stub
