@@ -25,6 +25,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -47,13 +48,15 @@ public class AdminFrame extends JFrame {
 	public static DefaultTableModel modelout = new DefaultTableModel();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	static int select = 1;
+	static Container container;
+	
 	/**
 	 * Create the frame.
 	 */
 	public AdminFrame(Connection conn) {
 		setBounds(100, 100, 954, 743);
 		getContentPane().setLayout(null);
-
+		AdminFrame.container = getContentPane();
 		IsAdminActive adminActive = new IsAdminActive();
 		
 		JButton searchButton = new JButton("°Ë »ö");
@@ -73,6 +76,7 @@ public class AdminFrame extends JFrame {
 			tabbedPane.add(floorstr, screen.panels.panelArray[i]);
 		}
 		getContentPane().add(tabbedPane);
+		
 ///////////////////////////////////////////////////////////////////////////////////////
 		scrollPane = new JScrollPane();
 
@@ -272,8 +276,12 @@ public class AdminFrame extends JFrame {
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// °»½Å ¹öÆ° Å¬¸¯ ½Ã
-				updateTable(conn);
-				PopupMenu.setPopMenuToButton(conn);	//ÆË¾÷ ¸Þ´º °»½Å
+//				updateTable(conn);
+//				PopupMenu.setPopMenuToButton(conn);	//ÆË¾÷ ¸Þ´º °»½Å
+				dispose();
+				EGPS.isAdmin = true;
+				Thread adminThread = new AdminThread(conn);
+				adminThread.start();
 			}
 		});
 		updateButton.setFont(new Font("±¼¸²", Font.PLAIN, 40));
@@ -333,16 +341,18 @@ public class AdminFrame extends JFrame {
 				dispose();
 			}
 		});
-	}
-	public static void refreshCate(Connection conn,JTabbedPane tabbedPane){
 		
-		tabbedPane.removeAll();
-		Category_Screen screen = new Category_Screen(conn);
-		for (int i = 0; i < screen.panels.panelArray.length; i++) {
-			int floor = i + 1;
-			String floorstr = floor + "Ãþ";
-			tabbedPane.add(floorstr, screen.panels.panelArray[i]);
-		}
+	}
+	public static void refreshCate(Connection conn){
+		//AdminFrame.container.remove(AdminFrame.tabbedPane);
+//		tabbedPane.removeAll();
+//		Category_Screen screen = new Category_Screen(conn);
+//		for (int i = 0; i < screen.panels.panelArray.length; i++) {
+//			int floor = i + 1;
+//			String floorstr = floor + "Ãþ";
+//			tabbedPane.add(floorstr, screen.panels.panelArray[i]);
+//		}
+//		AdminFrame.container.add(tabbedPane);
 	}
 	public static void updateTable(Connection conn)
 	{

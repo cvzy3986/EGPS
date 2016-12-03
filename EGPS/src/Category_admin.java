@@ -141,6 +141,8 @@ public class Category_admin extends javax.swing.JFrame {
 					
 					System.out.println(query);
 					int result = query.executeUpdate();				
+					AdminFrame.refreshCate(conn);
+
 					JOptionPane.showMessageDialog(null, "추가 되었습니다.");
 				} catch (SQLException sqle){
 					JOptionPane.showMessageDialog(null, "카테고리 추가 오류.");
@@ -171,7 +173,7 @@ public class Category_admin extends javax.swing.JFrame {
 					query.setString(1, jTextField3.getText());
 					query.executeUpdate();
 					JOptionPane.showMessageDialog(null, "삭제 되었습니다.");
-					AdminFrame.refreshCate(conn,tabbedPane);
+					
 
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
