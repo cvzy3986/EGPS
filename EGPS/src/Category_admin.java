@@ -141,7 +141,7 @@ public class Category_admin extends javax.swing.JFrame {
 					
 					System.out.println(query);
 					int result = query.executeUpdate();				
-					AdminFrame.refreshCate(conn);
+					
 
 					JOptionPane.showMessageDialog(null, "추가 되었습니다.");
 				} catch (SQLException sqle){

@@ -215,6 +215,10 @@ public class AdminFrame extends JFrame {
 					mana.addWindowListener(new WindowAdapter() {
 						public void windowClosing(WindowEvent e){
 								adminActive.isCate=false;
+								dispose();
+								EGPS.isAdmin = true;
+								Thread adminThread = new AdminThread(conn);
+								adminThread.start();
 						   }
 					});
 				}
@@ -276,12 +280,8 @@ public class AdminFrame extends JFrame {
 		updateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// 갱신 버튼 클릭 시
-//				updateTable(conn);
-//				PopupMenu.setPopMenuToButton(conn);	//팝업 메뉴 갱신
-				dispose();
-				EGPS.isAdmin = true;
-				Thread adminThread = new AdminThread(conn);
-				adminThread.start();
+				updateTable(conn);
+				PopupMenu.setPopMenuToButton(conn);	//팝업 메뉴 갱신
 			}
 		});
 		updateButton.setFont(new Font("굴림", Font.PLAIN, 40));
@@ -343,17 +343,7 @@ public class AdminFrame extends JFrame {
 		});
 		
 	}
-	public static void refreshCate(Connection conn){
-		//AdminFrame.container.remove(AdminFrame.tabbedPane);
-//		tabbedPane.removeAll();
-//		Category_Screen screen = new Category_Screen(conn);
-//		for (int i = 0; i < screen.panels.panelArray.length; i++) {
-//			int floor = i + 1;
-//			String floorstr = floor + "층";
-//			tabbedPane.add(floorstr, screen.panels.panelArray[i]);
-//		}
-//		AdminFrame.container.add(tabbedPane);
-	}
+
 	public static void updateTable(Connection conn)
 	{
 			// table에서 한줄씩 비우고 pid를 큐에 저장 
