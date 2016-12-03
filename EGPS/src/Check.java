@@ -7,7 +7,11 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -24,8 +28,10 @@ import javax.swing.JButton;
 public class Check extends JFrame {
 	static public ArrayList<Image> FLOORS = new ArrayList<>();
 	private JPanel contentPane;
+	Connection conn;
 
-	public Check() {
+	public Check(Connection conn) {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1133, 758);
 		contentPane = new JPanel();
@@ -33,21 +39,21 @@ public class Check extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		
-		String floorfile =null;
-		File sourceImage = null;
-		for(int i=1;i<=3;i++){
-			floorfile = i+".png";
-			sourceImage =  new File(floorfile);
-			try {
-				Image temp = ImageIO.read(sourceImage);
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rset = stmt.executeQuery("Select Mapimage from floor");
+			while (rset.next()) {
+				Image temp = ImageIO.read(rset.getBlob(1).getBinaryStream());
 				Image temp2 = temp.getScaledInstance(1000, 490, Image.SCALE_SMOOTH);
 				FLOORS.add(temp2);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+		} catch (SQLException se) {
+			// TODO Auto-generated catch block
+			se.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
 		
 		JLabel xLabel = new JLabel("X\uC88C\uD45C");
 		xLabel.setFont(new Font("±¼¸²", Font.PLAIN, 28));
