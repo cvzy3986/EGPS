@@ -237,6 +237,10 @@ public class AdminFrame extends JFrame {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					// TODO Auto-generated method stub
 					String product = searchField.getText();
+					if(product.length() == 0) {	//검색어가 없을 때
+						JOptionPane.showMessageDialog(null, "검색어를 입력해주세요.");
+						return;
+					}
 					try {
 						while (AdminFrame.modelout.getRowCount() != 0)
 						{
@@ -249,6 +253,11 @@ public class AdminFrame extends JFrame {
 						query.setString(1, "%" + product + "%");
 						System.out.println(query);
 						ResultSet rset = query.executeQuery();
+						if(!rset.next()){	//검색 결과가 없을때
+							JOptionPane.showMessageDialog(null, "검색 결과가 존재하지 않습니다.");
+							return;
+						}
+						rset = query.executeQuery();
 						ArrayList<String> row = new ArrayList<>();
 						while (rset.next()) {
 							row.add(rset.getString(1)); // pid
