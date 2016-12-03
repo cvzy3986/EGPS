@@ -55,6 +55,7 @@ public class Category_admin extends javax.swing.JFrame {
         Catedel = new javax.swing.JLabel();
         Catedel.setFont(new Font("±¼¸²", Font.BOLD, 40));
         jTextField1 = new javax.swing.JTextField();
+        jTextField1.setFont(new Font("±¼¸²", Font.PLAIN, 32));
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField3.setFont(new Font("±¼¸²", Font.PLAIN, 25));
