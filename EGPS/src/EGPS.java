@@ -47,7 +47,7 @@ public class EGPS extends JFrame {
 	public static ProductDrawImage panel = new ProductDrawImage();
 	public static boolean isAdmin;
 	public static Connection conn;
-	public static MapImage mapImage;
+	public static Map_Screen mapImage;
 
 	/**
 	 * Launch the application.
@@ -67,6 +67,8 @@ public class EGPS extends JFrame {
 				}
 			}
 		});
+		Thread thread =  new MusicThread();
+		thread.start();
 		
 	}
 
@@ -96,15 +98,14 @@ public class EGPS extends JFrame {
 			}
 		}
 		
-		Thread thread =  new MusicThread(conn);
-		thread.start();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1468, 950);
 		getContentPane().setLayout(null);
 		ArrayList<Image> arrFloor = new ArrayList<>();
 		getFloorImage(arrFloor, conn);
 
-		mapImage = new MapImage();
+		mapImage = new Map_Screen();
 		mapImage.setBounds(438, 376, 1000, 490);
 		getContentPane().add(mapImage);
 
@@ -128,11 +129,11 @@ public class EGPS extends JFrame {
 						return;
 					}
 					try {
-						while (AdminFrame.modelout.getRowCount() != 0)
+						while (Maneger_Screen.modelout.getRowCount() != 0)
 						{
-							String pid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(0)).elementAt(0);
+							String pid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(0)).elementAt(0);
 							
-							AdminFrame.modelout.removeRow(0);
+							Maneger_Screen.modelout.removeRow(0);
 						}
 						PreparedStatement query = conn.prepareStatement(
 								"Select pid,pname,cost,floor,category,cid,x,y,url from product where pname like ?");
@@ -143,20 +144,10 @@ public class EGPS extends JFrame {
 							JOptionPane.showMessageDialog(null, "검색 결과가 존재하지 않습니다.");
 							return;
 						}
-						rset = query.executeQuery();
-						ArrayList<String> row = new ArrayList<>();
-						while (rset.next()) {
-							row.add(rset.getString(1)); // pid
-							row.add(rset.getString(2)); // pname
-							row.add(rset.getString(3)); // cost
-							row.add(rset.getString(4)); // floor
-							row.add(rset.getString(5)); // category
-							row.add(rset.getString(6)); // cid
-							row.add(rset.getString(7)); // x
-							row.add(rset.getString(8)); // y
-							row.add(rset.getString(9)); // URL
-							AdminFrame.modelout.addRow(row.toArray());
-							row.clear();
+						if(!SearchActive.isActive){
+							SearchActive.isActive = true;
+							Search_result_ScreenThread thread = new Search_result_ScreenThread(textField, conn, mapImage,SearchActive);
+							thread.start();
 						}
 					} catch (SQLException sqle) {
 						System.out.println("SQLException : " + sqle);
@@ -171,7 +162,7 @@ public class EGPS extends JFrame {
 		searchButton.setForeground(UIManager.getColor("Desktop.background"));
 		searchButton.setBounds(296, 753, 114, 50);
 		getContentPane().add(searchButton);
-		searchButton.addActionListener(new SearchButtonActionListener(textField, conn, mapImage, SearchActive));
+		searchButton.addActionListener(new SearchActionListener(textField, conn, mapImage, SearchActive));
 
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP); // tabbedPane이 바뀔 때마다 지도 바뀜
 		tabbedPane.setBackground(new Color(228,211,197));
@@ -238,7 +229,7 @@ public class EGPS extends JFrame {
 				JOptionPane.showMessageDialog(null, resultStr, "비밀번호", JOptionPane.QUESTION_MESSAGE);
 				if (resultStr.getText().equals("123")) {
 					EGPS.isAdmin = true;
-					Thread adminThread = new AdminThread(conn);
+					Thread adminThread = new Maneger_ScreenThread(conn);
 					adminThread.start();
 					dispose();
 				} else {
@@ -296,24 +287,21 @@ class IsSearchActive {
 	public boolean isActive;
 }
 class MusicThread extends Thread{
-	Connection conn;
-	MusicThread(Connection conn){
-		this.conn = conn;
-	}
 	public void run(){
 		
 		InputStream mama=this.getClass().getClassLoader().getResourceAsStream("bgm.wav");
+		
 		InputStream bufferedIn = new BufferedInputStream(mama);
+		
 		playsound(bufferedIn);
 	}
 	static void playsound(InputStream sound) {
 		try{
 			Clip clip = AudioSystem.getClip();
 			clip.open(AudioSystem.getAudioInputStream(sound));
-			clip.start();
 			
-			//Thread.sleep(clip.getMicrosecondLength());
-			
+			clip.loop(100);
+		
 		}catch(Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 			

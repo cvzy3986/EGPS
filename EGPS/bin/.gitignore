@@ -43,6 +43,7 @@
 /MouseClickEvent.class
 /Mousepanel.class
 /Multi_admin.class
+/MusicThread.class
 /OnePro_admin.class
 /Panels.class
 /PopupMenu.class
@@ -62,4 +63,3 @@
 /TabChangeListener.class
 /UploadActionListener.class
 /addProActionListener.class
-/MusicThread.class
