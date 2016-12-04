@@ -12,12 +12,12 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-class SearchThread extends Thread{
+class Search_result_ScreenThread extends Thread{
 	JTextField textField;
 	Connection conn;
-	MapImage mapImage;
+	Map_Screen mapImage;
 	IsSearchActive SearchActive;
-	SearchThread(JTextField textField,Connection conn,MapImage mapImage,IsSearchActive SearchActive){
+	Search_result_ScreenThread(JTextField textField,Connection conn,Map_Screen mapImage,IsSearchActive SearchActive){
 		this.textField= textField;
 		this.conn = conn;
 		this.mapImage = mapImage;
@@ -39,7 +39,7 @@ class SearchThread extends Thread{
 				SearchActive.isActive=false;
 				System.out.println("SQLException : " + sqle);
 			}
-		   JFrame frame2 = new SearchFrame(textField,conn,mapImage);
+		   JFrame frame2 = new Search_result_Screen(textField,conn,mapImage);
 		   frame2.setBounds(new Rectangle(1000, 800));
 		   frame2.setVisible(true);
 		   frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

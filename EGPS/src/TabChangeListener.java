@@ -6,9 +6,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 class TabChangeListener implements ChangeListener {
-	MapImage mapImage;
+	Map_Screen mapImage;
 	ArrayList<Image> arrFloor;
-	TabChangeListener(MapImage mapImage, ArrayList<Image> arrFloor){
+	TabChangeListener(Map_Screen mapImage, ArrayList<Image> arrFloor){
 		this.mapImage=mapImage;
 		this.arrFloor=arrFloor;
 	}

@@ -26,12 +26,12 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 
-class SearchFrame extends JFrame{
+class Search_result_Screen extends JFrame{
    private JPanel contentPane;
    private Connection conn;
    private JTextField textField;
-   private MapImage mapImage;
-   public SearchFrame(JTextField textField,Connection conn,MapImage mapImage) {
+   private Map_Screen mapImage;
+   public Search_result_Screen(JTextField textField,Connection conn,Map_Screen mapImage) {
 	   
 	    this.textField= textField;
 		this.conn = conn;

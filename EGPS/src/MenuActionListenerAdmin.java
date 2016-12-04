@@ -16,11 +16,11 @@ class MenuActionListenerAdmin implements  ActionListener{
 
    public void actionPerformed(ActionEvent e) {
       try {
-         int i = AdminFrame.modelout.getRowCount();
+         int i = Maneger_Screen.modelout.getRowCount();
          String pstr = e.getActionCommand(), pname = null;
          //table 행 개수에 맞춰 비교 연산 수행, 테이블에 이미 있는 물품이면 추가x
          while (i-- != 0) {
-            pname = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(i)).elementAt(1);
+            pname = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(i)).elementAt(1);
             if (pstr.equals(pname))   return;   //중복이면 비교 종료
          }
          
@@ -41,7 +41,7 @@ class MenuActionListenerAdmin implements  ActionListener{
             row.add(rset.getString(7)); // x
             row.add(rset.getString(8)); // y
             row.add(rset.getString(9)); // URL
-            AdminFrame.modelout.addRow(row.toArray());
+            Maneger_Screen.modelout.addRow(row.toArray());
             row.clear();
          }
       } catch (SQLException e1) {

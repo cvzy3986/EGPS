@@ -18,15 +18,15 @@ public class Spec_admin extends  OnePro_admin{
 //			System.out.println("인덱스 번호 : "+index[(table.getSelectedRowCount()-1)-count]);
 			int num = index[(table.getSelectedRowCount()-1)-count];	//테이블 순서대로 선택된 row를 받는다.
 			
-			String pid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(num)).elementAt(0);
-			String pname = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(num)).elementAt(1);
-			String cost = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(num)).elementAt(2);
-			String floor = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(num)).elementAt(3);
-			String category = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(num)).elementAt(4);
-			String cid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(num)).elementAt(5);
-			String x = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(num)).elementAt(6);
-			String y = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(num)).elementAt(7);
-			String URL = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(num)).elementAt(8);
+			String pid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(num)).elementAt(0);
+			String pname = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(num)).elementAt(1);
+			String cost = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(num)).elementAt(2);
+			String floor = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(num)).elementAt(3);
+			String category = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(num)).elementAt(4);
+			String cid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(num)).elementAt(5);
+			String x = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(num)).elementAt(6);
+			String y = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(num)).elementAt(7);
+			String URL = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(num)).elementAt(8);
 			
 			try {
 				PreparedStatement menuQuery = conn.prepareStatement(
@@ -63,11 +63,11 @@ public class Spec_admin extends  OnePro_admin{
 			int num = index[(table.getSelectedRowCount()-1)-count];	//테이블 순서대로 선택된 row를 받는다.
 			
 			// 테이블에서 선택된 행의 pid를 구한다.
-			String pid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(num)).elementAt(0);
+			String pid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(num)).elementAt(0);
 			//System.out.println("selected pid : " + pid);
 	
 			try {
-				AdminFrame.modelout.removeRow(num); // 선택한 행 내용 삭제
+				Maneger_Screen.modelout.removeRow(num); // 선택한 행 내용 삭제
 				// 삭제 쿼리
 				PreparedStatement menuQuery = conn.prepareStatement("DELETE from product where pid = ?");
 				menuQuery.setString(1, pid);
