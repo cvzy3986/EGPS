@@ -84,7 +84,7 @@ public class OnePro_admin implements ProductAdmin {
 			row.add(form.getX()); // x
 			row.add(form.getY()); // y
 			row.add(form.getURL()); // URL
-			AdminFrame.modelout.addRow(row.toArray());
+			Maneger_Screen.modelout.addRow(row.toArray());
 			row.clear();
 			
 			return 0; //정상 처리 시 여기서 0을 리턴하고 종료
@@ -106,15 +106,15 @@ public class OnePro_admin implements ProductAdmin {
 		int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
 
 		// 테이블에서 선택된 행의 정보를 받는다.
-		String pid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(0);
-		String pname = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(1);
-		String cost = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(2);
-		String floor = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(3);
-		String category = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(4);
-		String cid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(5);
-		String x = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(6);
-		String y = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(7);
-		String URL = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(8);
+		String pid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(0);
+		String pname = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(1);
+		String cost = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(2);
+		String floor = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(3);
+		String category = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(4);
+		String cid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(5);
+		String x = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(6);
+		String y = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(7);
+		String URL = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(8);
 
 		try {
 			PreparedStatement menuQuery = conn.prepareStatement(
@@ -145,10 +145,10 @@ public class OnePro_admin implements ProductAdmin {
 		int index = table.getSelectedRow(); // 선택된 테이블 번호 받아온다.
 
 		// 테이블에서 선택된 행의 pid를 구한다.
-		String pid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(0);
+		String pid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(0);
 
 		try {
-			AdminFrame.modelout.removeRow(index); // 선택한 행 내용 삭제
+			Maneger_Screen.modelout.removeRow(index); // 선택한 행 내용 삭제
 			// 삭제 쿼리
 			PreparedStatement menuQuery = conn.prepareStatement("DELETE from product where pid = ?");
 			menuQuery.setString(1, pid);

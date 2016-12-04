@@ -5,13 +5,13 @@ import java.sql.Connection;
 
 import javax.swing.JFrame;
 
-public class AdminThread extends Thread{
+public class Maneger_ScreenThread extends Thread{
 	Connection conn;
-	AdminThread(Connection conn){
+	Maneger_ScreenThread(Connection conn){
 		this.conn  = conn;
 	}
 	public void run(){
-		AdminFrame adminframe = new AdminFrame(conn);
+		Maneger_Screen adminframe = new Maneger_Screen(conn);
 		adminframe.setBounds(new Rectangle(1000, 700));
 		adminframe.setVisible(true);
 		adminframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

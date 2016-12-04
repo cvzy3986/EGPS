@@ -4,7 +4,7 @@ import java.awt.Image;
 
 import javax.swing.JPanel;
 
-class MapImage extends JPanel{
+class Map_Screen extends JPanel{
 	private Image floor;
 	public void setImage(Image floor){
 		this.floor=floor;

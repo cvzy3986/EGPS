@@ -27,8 +27,8 @@ class SearchButtonActionAdmin implements ActionListener {
 			return;
 		}
 		try {
-			while (AdminFrame.modelout.getRowCount() != 0)
-				AdminFrame.modelout.removeRow(0);
+			while (Maneger_Screen.modelout.getRowCount() != 0)
+				Maneger_Screen.modelout.removeRow(0);
 			PreparedStatement query = conn.prepareStatement(
 					"Select pid,pname,cost,floor,category,cid,x,y,url from product where pname like ?");
 			query.setString(1, "%" + product + "%");
@@ -50,7 +50,7 @@ class SearchButtonActionAdmin implements ActionListener {
 				row.add(rset.getString(7)); // x
 				row.add(rset.getString(8)); // y
 				row.add(rset.getString(9)); // URL
-				AdminFrame.modelout.addRow(row.toArray());
+				Maneger_Screen.modelout.addRow(row.toArray());
 				row.clear();
 			}
 		} catch (SQLException sqle) {

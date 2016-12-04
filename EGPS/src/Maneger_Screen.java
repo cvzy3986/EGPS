@@ -43,7 +43,7 @@ import javax.swing.ButtonGroup;
 import java.sql.Connection;
 import javax.swing.border.TitledBorder;
 
-public class AdminFrame extends JFrame {
+public class Maneger_Screen extends JFrame {
 	private JScrollPane scrollPane;
 	public static DefaultTableModel modelout = new DefaultTableModel();
 	private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -53,11 +53,11 @@ public class AdminFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AdminFrame(Connection conn) {
+	public Maneger_Screen(Connection conn) {
 		getContentPane().setBackground(new Color(219,208,186));
 		setBounds(100, 100, 954, 743);
 		getContentPane().setLayout(null);
-		AdminFrame.container = getContentPane();
+		Maneger_Screen.container = getContentPane();
 		IsAdminActive adminActive = new IsAdminActive();
 		
 		JButton searchButton = new JButton("검 색");
@@ -231,7 +231,7 @@ public class AdminFrame extends JFrame {
 								adminActive.isCate=false;
 								dispose();
 								EGPS.isAdmin = true;
-								Thread adminThread = new AdminThread(conn);
+								Thread adminThread = new Maneger_ScreenThread(conn);
 								adminThread.start();
 						   }
 					});
@@ -252,11 +252,11 @@ public class AdminFrame extends JFrame {
 					// TODO Auto-generated method stub
 					String product = searchField.getText();
 					try {
-						while (AdminFrame.modelout.getRowCount() != 0)
+						while (Maneger_Screen.modelout.getRowCount() != 0)
 						{
-							String pid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(0)).elementAt(0);
+							String pid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(0)).elementAt(0);
 							
-							AdminFrame.modelout.removeRow(0);
+							Maneger_Screen.modelout.removeRow(0);
 						}
 						PreparedStatement query = conn.prepareStatement(
 								"Select pid,pname,cost,floor,category,cid,x,y,url from product where pname like ?");
@@ -274,7 +274,7 @@ public class AdminFrame extends JFrame {
 							row.add(rset.getString(7)); // x
 							row.add(rset.getString(8)); // y
 							row.add(rset.getString(9)); // URL
-							AdminFrame.modelout.addRow(row.toArray());
+							Maneger_Screen.modelout.addRow(row.toArray());
 							row.clear();
 						}
 					} catch (SQLException sqle) {
@@ -311,7 +311,7 @@ public class AdminFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				//지우기 버튼 클릭 시 , 선택한 물품 테이블에서 뺀다
 				int index = table.getSelectedRow();
-				AdminFrame.modelout.removeRow(index);
+				Maneger_Screen.modelout.removeRow(index);
 			}
 		});
 		removeButton.setFont(new Font("굴림", Font.PLAIN, 33));
@@ -323,8 +323,8 @@ public class AdminFrame extends JFrame {
 		cleanButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//비우기 버튼 클릭시 , 테이블은 비운다.
-				while (AdminFrame.modelout.getRowCount() != 0)
-						AdminFrame.modelout.removeRow(0);
+				while (Maneger_Screen.modelout.getRowCount() != 0)
+						Maneger_Screen.modelout.removeRow(0);
 			}
 		});
 		cleanButton.setFont(new Font("굴림", Font.PLAIN, 33));
@@ -372,11 +372,11 @@ public class AdminFrame extends JFrame {
 	{
 			// table에서 한줄씩 비우고 pid를 큐에 저장 
 			Queue update = new LinkedList();	//pid 저장
-			while (AdminFrame.modelout.getRowCount() != 0)
+			while (Maneger_Screen.modelout.getRowCount() != 0)
 			{
-				String pid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(0)).elementAt(0);
+				String pid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(0)).elementAt(0);
 				update.offer(pid);
-				AdminFrame.modelout.removeRow(0);
+				Maneger_Screen.modelout.removeRow(0);
 			}
 			//큐가 null이 될때까지 pid를 꺼내서 해당하는 물품 정보를 table에 출력
 			while(update.peek() != null)
@@ -399,7 +399,7 @@ public class AdminFrame extends JFrame {
 						row.add(rset.getString(7));	//x
 						row.add(rset.getString(8));	//y
 						row.add(rset.getString(9));	//URL
-						AdminFrame.modelout.addRow(row.toArray());
+						Maneger_Screen.modelout.addRow(row.toArray());
 						row.clear();
 					}
 				} catch (SQLException e1) {

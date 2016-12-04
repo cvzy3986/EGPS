@@ -10,21 +10,21 @@ public class Multi_admin extends OnePro_admin{
 	public  void change(JTable table, Connection conn, Boolean sel)	//sel = 기능 구분용
 	{
 		// 수정 눌렸을 때
-		int count = AdminFrame.modelout.getRowCount();
+		int count = Maneger_Screen.modelout.getRowCount();
 		while (count-- != 0)
 		{
 			// 테이블에서 선택된 행의 정보를 받는다.
-			int index = (AdminFrame.modelout.getRowCount()-1) - count;
+			int index = (Maneger_Screen.modelout.getRowCount()-1) - count;
 			System.out.println("현재 행  : "+index);
-			String pid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(0);
-			String pname = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(1);
-			String cost = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(2);
-			String floor = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(3);
-			String category = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(4);
-			String cid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(5);
-			String x = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(6);
-			String y = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(7);
-			String URL = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(index)).elementAt(8);
+			String pid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(0);
+			String pname = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(1);
+			String cost = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(2);
+			String floor = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(3);
+			String category = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(4);
+			String cid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(5);
+			String x = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(6);
+			String y = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(7);
+			String URL = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(index)).elementAt(8);
 			
 			try {
 				PreparedStatement menuQuery = conn.prepareStatement(
@@ -55,11 +55,11 @@ public class Multi_admin extends OnePro_admin{
 	//delete
 	public  void change(JTable table, Connection conn)
 	{
-		while (AdminFrame.modelout.getRowCount() != 0)
+		while (Maneger_Screen.modelout.getRowCount() != 0)
 		{
 			try {
 				// 테이블에서 선택된 행의 pid를 구한다.
-				String pid = (String) ((Vector) AdminFrame.modelout.getDataVector().elementAt(0)).elementAt(0);
+				String pid = (String) ((Vector) Maneger_Screen.modelout.getDataVector().elementAt(0)).elementAt(0);
 				
 				// 삭제 쿼리
 				PreparedStatement menuQuery = conn.prepareStatement("DELETE from product where pid = ?");
@@ -71,7 +71,7 @@ public class Multi_admin extends OnePro_admin{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			AdminFrame.modelout.removeRow(0);
+			Maneger_Screen.modelout.removeRow(0);
 		}
 	}
 

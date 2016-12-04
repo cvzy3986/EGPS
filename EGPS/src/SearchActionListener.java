@@ -4,12 +4,12 @@ import java.sql.Connection;
 
 import javax.swing.JTextField;
 
-class SearchButtonActionListener implements ActionListener{
+class SearchActionListener implements ActionListener{
 	JTextField textField;
 	Connection conn;
-	MapImage mapImage;
+	Map_Screen mapImage;
 	IsSearchActive SearchActive;
-	SearchButtonActionListener(JTextField textField,Connection conn,MapImage mapImage,IsSearchActive SearchActive){
+	SearchActionListener(JTextField textField,Connection conn,Map_Screen mapImage,IsSearchActive SearchActive){
 		this.textField =textField;
 		this.conn  = conn;
 		this.mapImage = mapImage;
@@ -20,7 +20,7 @@ class SearchButtonActionListener implements ActionListener{
 		// TODO Auto-generated method stub
 		if(!SearchActive.isActive){
 			SearchActive.isActive = true;
-			SearchThread thread = new SearchThread(textField, conn, mapImage,SearchActive);
+			Search_result_ScreenThread thread = new Search_result_ScreenThread(textField, conn, mapImage,SearchActive);
 			thread.start();
 		}
 	}
