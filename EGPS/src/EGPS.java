@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,16 +20,18 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
-import javax.swing.JPasswordField;
 import javax.swing.border.LineBorder;
 
 /**
@@ -63,6 +67,7 @@ public class EGPS extends JFrame {
 				}
 			}
 		});
+		
 	}
 
 	/**
@@ -74,7 +79,8 @@ public class EGPS extends JFrame {
 		IsSearchActive SearchActive = new IsSearchActive();
 		IsAdminActive adminActive = new IsAdminActive();
 		SearchActive.isActive = false;
-
+		
+		
 		if (isDBaccess) {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
@@ -89,6 +95,9 @@ public class EGPS extends JFrame {
 				System.out.println("SQLException: " + sqex.getMessage());
 			}
 		}
+		
+		Thread thread =  new MusicThread(conn);
+		thread.start();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1468, 950);
 		getContentPane().setLayout(null);
@@ -259,6 +268,10 @@ public class EGPS extends JFrame {
 		Image temp2 = temp.getScaledInstance(1000, 490, Image.SCALE_SMOOTH);
 		return temp2;
 	}
+	
+	
+	
+	
 }
 
 class DBConnect {
@@ -281,4 +294,31 @@ class DBConnect {
 
 class IsSearchActive {
 	public boolean isActive;
+}
+class MusicThread extends Thread{
+	Connection conn;
+	MusicThread(Connection conn){
+		this.conn = conn;
+	}
+	public void run(){
+		
+		InputStream mama=this.getClass().getClassLoader().getResourceAsStream("bgm.wav");
+		InputStream bufferedIn = new BufferedInputStream(mama);
+		playsound(bufferedIn);
+	}
+	static void playsound(InputStream sound) {
+		try{
+			Clip clip = AudioSystem.getClip();
+			clip.open(AudioSystem.getAudioInputStream(sound));
+			clip.start();
+			
+			//Thread.sleep(clip.getMicrosecondLength());
+			
+		}catch(Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			
+		}
+	}
+
+	
 }
